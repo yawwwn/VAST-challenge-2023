@@ -11,7 +11,7 @@
     "href": "about.html",
     "title": "About Us",
     "section": "",
-    "text": "About\n\n1+1+1\n\n[1] 3"
+    "text": "About\n\n1+1+1+1+1\n\n[1] 5"
   },
   {
     "objectID": "Untitled.html",
@@ -32,6 +32,17 @@
     "href": "Proposal/Proposal.html",
     "title": "Proposal",
     "section": "",
+<<<<<<< HEAD
     "text": "Background\nTest"
+=======
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Proposal/Proposal.html#running-code",
+    "href": "Proposal/Proposal.html#running-code",
+    "title": "Proposal",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+>>>>>>> f18bdf1dec5cb0e0f95709fb5a66ed229874d029
   }
 ]
