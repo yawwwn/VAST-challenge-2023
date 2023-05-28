@@ -1,9 +1,9 @@
 ---
-title: "About"
+title: "About Us"
 ---
 
-About this site
+About
 
 ```{r}
-1 + 1
+
 ```

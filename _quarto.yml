@@ -3,10 +3,9 @@ project:
 
 website:
   title: "ISSS608-VAA"
-  site-url: 
+  site-url: "http:isss608-vast-2023-grp11.netlify.app"
   sidebar:
     background: "#A8D8CA"
-    tools:
     
     style: "docked"
     search: true

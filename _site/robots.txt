@@ -1,1 +1,1 @@
-Sitemap: https://thngyaowen-iss608.netlify.app/sitemap.xml
+Sitemap: http:isss608-vast-2023-grp11.netlify.app/sitemap.xml
