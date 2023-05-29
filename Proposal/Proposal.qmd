@@ -4,10 +4,7 @@ format: html
 editor: visual
 ---
 
-
-
 Test
-
 
 ```{r}
 1 + 1
@@ -19,5 +16,3 @@ You can add options to executable code like this
 #| echo: false
 2 * 2 
 ```
-
-

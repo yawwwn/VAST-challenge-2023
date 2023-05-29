@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http:isss608-vast-2023-grp11.netlify.app/Proposal/Proposal.html</loc>
-    <lastmod>2023-05-28T09:58:25.336Z</lastmod>
+    <loc>http:isss608-vast-2023-grp11.netlify.app/about.html</loc>
+    <lastmod>2023-05-29T12:13:00.133Z</lastmod>
   </url>
   <url>
-    <loc>http:isss608-vast-2023-grp11.netlify.app/about.html</loc>
-    <lastmod>2023-05-28T09:58:24.754Z</lastmod>
+    <loc>http:isss608-vast-2023-grp11.netlify.app/Proposal/Proposal.html</loc>
+    <lastmod>2023-05-29T12:13:02.327Z</lastmod>
+  </url>
+  <url>
+    <loc>http:isss608-vast-2023-grp11.netlify.app/Untitled.html</loc>
+    <lastmod>2023-05-29T12:13:04.265Z</lastmod>
   </url>
 </urlset>
