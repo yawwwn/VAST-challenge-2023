@@ -1,23 +1,36 @@
 ---
-title: "Proposal"
+title: "Visual Analytics Project Proposal"
+description: "VAST Challenge 2023"
+author:
+  - name: Group9:<br> Kim Junseok <br> Oh Jia Wen <br> Thng Yao Wen <br>
+    #url: 
+date: '2023-06-03'
 format: html
-editor: visual
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
+# 1. Background
 
+In this project, our team will attempt the [VAST Challenge
+2023](https://vast-challenge.github.io/2023/) and build a web-enabled
+visual analytics application by using R Shiny. The challenge focuses on
+illegal
 
-Test
+# 2. Project Topic
 
+Our group has chosen to take on [Mini-Challenge 2: Identify
+Patterns](https://vast-challenge.github.io/2023/MC2.html). In this
+challenge, The country of Oceanus has sought FishEye International\'s
+help in identifying companies possibly engaged in illegal, unreported,
+and unregulated (IUU) fishing. Using visual analytics, our team strives
+to help identify companies that may be engaged in illegal fishing.
 
-```{r}
-1 + 1
-```
+# 3. Motivation
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2 
-```
-
-
+# 4. Approach
