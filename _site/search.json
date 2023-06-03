@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Fisheye International Solution",
-    "section": "",
-    "text": "Test Test"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About Us",
@@ -16,7 +9,11 @@
   {
     "objectID": "Proposal/Proposal.html",
     "href": "Proposal/Proposal.html",
+<<<<<<< HEAD
     "title": "Visual Analytics Project Proposal",
+=======
+    "title": "Proposal",
+>>>>>>> 215b763f9f8da1cfc38425c6b35baddf4d2bdd73
     "section": "",
     "text": "Test\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4"
   },
