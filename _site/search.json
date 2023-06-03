@@ -9,13 +9,9 @@
   {
     "objectID": "Proposal/Proposal.html",
     "href": "Proposal/Proposal.html",
-<<<<<<< HEAD
     "title": "Visual Analytics Project Proposal",
-=======
-    "title": "Proposal",
->>>>>>> 215b763f9f8da1cfc38425c6b35baddf4d2bdd73
     "section": "",
-    "text": "Test\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4"
+    "text": "1. Background\nIn this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal\n\n\n2. Project Topic\nOur group has chosen to take on Mini-Challenge 2: Identify Patterns. In this challenge, The country of Oceanus has sought FishEye International's help in identifying companies possibly engaged in illegal, unreported, and unregulated (IUU) fishing. Using visual analytics, our team strives to help identify companies that may be engaged in illegal fishing.\n\n\n3. Motivation\n\n\n4. Approach"
   },
   {
     "objectID": "Untitled.html",
@@ -37,5 +33,12 @@
     "title": "test",
     "section": "Running Code",
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISSS608-VAA Project",
+    "section": "",
+    "text": "Welcome to our page for ISSS608. In this website, you will find our project prepared for this course."
   }
 ]
