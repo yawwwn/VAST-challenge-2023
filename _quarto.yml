@@ -22,21 +22,8 @@ website:
       - section: "Meeting Minutes"
         contents:
           - text: "Meeting 1"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%201st.docx?d=w38ef8b08f8c643418fda0ff0dee19570&csf=1&web=1&e=jIldbH"     
-          - text: "Meeting 2"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs"   
-          - text: "Meeting 2"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs1"
-          - text: "Meeting 3"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs2"
-          - text: "Meeting 4"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs3"
-          - text: "Meeting 5"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs4"
-          - text: "Meeting 6"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs5"
-          - text: "Meeting 7"
-            href: "https://smu.sharepoint.com/:w:/r/teams/ISSS608VAAGROUP11/Shared%20Documents/General/VAA%20Minutes%20of%20Meeting%202nd.docx?d=w450828f75dc74465a296bc1ab482e597&csf=1&web=1&e=oRSJzs6"          
+            href: "Minutes/Minutes_01.html"
+            
       - section: "User Guide"
         contents:
           - text: "User Guide"
