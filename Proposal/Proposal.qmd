@@ -14,7 +14,7 @@ title-block-banner: true
 
 # 1. Background
 
-In this project, our team will attempt the [VAST Challenge 2023](https://vast-challenge.github.io/2023/) and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal, unreported and unregulated (IUU) fishing, which is said to be a major contributor to overfishing globally. The illegal fishing trade has been linked to organized crime, and human rights violations are common when fishing operations are conducted without regulatory oversight. FishEye International is a nonpartisan organization has spent the past years collecting data and has made public several of their datasets to enlist the help of the Visual Analytics community to help analyse the data and make recommendations.
+In this project, our team will attempt the [VAST Challenge 2023](https://vast-challenge.github.io/2023/) and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal, unreported and unregulated (IUU) fishing, which is said to be a major contributor to overfishing globally. The illegal fishing trade has been linked to organized crime, and human rights violations are common when fishing operations are conducted without regulatory oversight. FishEye International is a nonpartisan organization has spent the past years collecting data and has made public several of their datasets to enlist the help of the Visual Analytics community to help analyse the data and make recommendations. 
 
 # 2. Project Topic
 
