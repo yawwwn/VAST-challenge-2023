@@ -17,17 +17,17 @@ editor_options:
 
 # Agenda(s)
 
-+---------------------------------------------------------------------------------------------------------+
-| 1.  Discussion on Project Approach                                                                      |
-+---------------------------------------------------------------------------------------------------------+
-| 2.  Work Allocation for Project Proposal                                                                |
-+---------------------------------------------------------------------------------------------------------+
-| 3.  XXX                                                                                                 |
-+---------------------------------------------------------------------------------------------------------+
-| 4.  Review on next agenda(s)                                                                            |
-+---------------------------------------------------------------------------------------------------------+
++------------------------------------------+
+| 1.  Discussion on Project Approach       |
++------------------------------------------+
+| 2.  Work Allocation for Project Proposal |
++------------------------------------------+
+| 3.  XXX                                  |
++------------------------------------------+
+| 4.  Review on next agenda(s)             |
++------------------------------------------+
 
-# 1. Discussion on Project Approach 
+# 1. Discussion on Project Approach
 
 The team members shared their individual approach based on Take Home Exercise 2 and agreed that we will
 use Jia Wen's approach for the time being and do the necessary fine tuning during the project.
