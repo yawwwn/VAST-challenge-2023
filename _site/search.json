@@ -40,5 +40,12 @@
     "title": "test",
     "section": "Running Code",
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "Minutes/Minutes_02.html",
+    "href": "Minutes/Minutes_02.html",
+    "title": "Project Meeting 02",
+    "section": "",
+    "text": "Agenda(s)\n\n\n\n\n\n\n\nDiscussion on Project Approach\n\n\n\n\nWork Allocation for Project Proposal\n\n\n\n\nXXX\n\n\n\n\nReview on next agenda(s)\n\n\n\n\n\n\n1. Discussion on Project Approach\nThe team members shared their individual approach based on Take Home Exercise 2 and agreed that we will use Jia Wen’s approach for the time being and do the necessary fine tuning during the project.\nThe team also agreed that more time should be taken to explore the different literature reviews available to understand the factors that maybe related to illegal fishing. Junseok recapped the trans-shipment methodologies that he have read in the literature review that Prof Kam’s shared.\n\n\n2. Work Allocation on Project Proposal\nJW suggested we open a Telegram group instead of Whatsapp for easier communications.  \nYW suggested for all of us to work on the Common Git, and reminded the team to always pull first before push anything\nJW shared useful links for themes: https://quarto.org/docs/gallery/#websites"
   }
 ]
