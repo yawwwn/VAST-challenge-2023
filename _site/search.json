@@ -25,11 +25,32 @@
     "href": "Proposal/Proposal.html",
     "title": "Visual Analytics Project Proposal",
     "section": "",
-    "text": "1. Background\nIn this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal\n\n\n2. Project Topic\nOur group has chosen to take on Mini-Challenge 2: Identify Patterns. In this challenge, The country of Oceanus has sought FishEye International's help in identifying companies possibly engaged in illegal, unreported, and unregulated (IUU) fishing. Using visual analytics, our team strives to help identify companies that may be engaged in illegal fishing.\n\n\n3. Motivation\n\n\n4. Approach"
+    "text": "In this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal"
+  },
+  {
+    "objectID": "Proposal/Proposal.html#evaluating-link-inference-bundled-data-sets",
+    "href": "Proposal/Proposal.html#evaluating-link-inference-bundled-data-sets",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.1 Evaluating link inference bundled data sets",
+    "text": "4.1 Evaluating link inference bundled data sets\nOur approach is identifying which bundle is reliable is as follows:\n\nPlot a heatmap of the number of transactions over the years to observe the temporal trend and anomalies. The resulting year would be used as the timeframe in the subsequent network graph.\n\nNext, plot a treemap based on attributes of the edges, specifically the HSCodes and the Year of the individual trade records. The resulting top HSCode and as well as the anomaly (in this case, the spike in the median weight) will be identified and similarly used for the network graph\n\nAnother treemap is plotted using the Bundled data based on HSCode Chapter30.\n\n\n\nSubsequently, a stacked bar chart is plotted to observe which HSCodes are completed to identify which bundles are reliable.\n\n\nThe plotted graphs will then be used to identify new patterns or anomalies that are present when new links are added."
+  },
+  {
+    "objectID": "Proposal/Proposal.html#identifying-which-companies-are-likely-to-involve-in-iuu",
+    "href": "Proposal/Proposal.html#identifying-which-companies-are-likely-to-involve-in-iuu",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.2 Identifying which companies are likely to involve in IUU",
+    "text": "4.2 Identifying which companies are likely to involve in IUU"
   },
   {
     "objectID": "Untitled.html",
     "href": "Untitled.html",
+    "title": "test",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Untitled.html#quarto",
+    "href": "Untitled.html#quarto",
     "title": "test",
     "section": "",
     "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
