@@ -15,7 +15,6 @@ editor_options:
     wrap: 72
 ---
 
-
 # 1. Background
 
 In this project, our team will attempt the [VAST Challenge
@@ -27,7 +26,7 @@ illegal
 
 Our group has chosen to take on [Mini-Challenge 2: Identify
 Patterns](https://vast-challenge.github.io/2023/MC2.html). In this
-challenge, The country of Oceanus has sought FishEye International\'s
+challenge, The country of Oceanus has sought FishEye International's
 help in identifying companies possibly engaged in illegal, unreported,
 and unregulated (IUU) fishing. Using visual analytics, our team strives
 to help identify companies that may be engaged in illegal fishing.

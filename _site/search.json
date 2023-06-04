@@ -25,11 +25,18 @@
     "href": "Proposal/Proposal.html",
     "title": "Visual Analytics Project Proposal",
     "section": "",
-    "text": "1. Background\nIn this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal\n\n\n2. Project Topic\nOur group has chosen to take on Mini-Challenge 2: Identify Patterns. In this challenge, The country of Oceanus has sought FishEye International's help in identifying companies possibly engaged in illegal, unreported, and unregulated (IUU) fishing. Using visual analytics, our team strives to help identify companies that may be engaged in illegal fishing.\n\n\n3. Motivation\n\n\n4. Approach"
+    "text": "1. Background\nIn this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal\n\n\n2. Project Topic\nOur group has chosen to take on Mini-Challenge 2: Identify Patterns. In this challenge, The country of Oceanus has sought FishEye International’s help in identifying companies possibly engaged in illegal, unreported, and unregulated (IUU) fishing. Using visual analytics, our team strives to help identify companies that may be engaged in illegal fishing.\n\n\n3. Motivation\n\n\n4. Approach"
   },
   {
     "objectID": "Untitled.html",
     "href": "Untitled.html",
+    "title": "test",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Untitled.html#quarto",
+    "href": "Untitled.html#quarto",
     "title": "test",
     "section": "",
     "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."

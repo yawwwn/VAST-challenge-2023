@@ -3,44 +3,42 @@ project:
 
 website:
   title: "ISSS608-VAA Project Website"
+  open-graph: true
   site-url: "http:isss608-vast-2023-grp11.netlify.app"
-  sidebar:
-    background: "#A8D8CA"
-    
-    style: "docked"
-    search: true
-    collapse-level: 1
-    contents:
-      - section: "Home"
-        contents: 
-          - text: "Intro"
-            href: index.qmd
-          - text: "About"
-            href: about.qmd
+  repo-url: "https://github.com/yawwwn/VAST-challenge-2023"
+  navbar:
+    background: "#f0eeeb"
+    logo: images/rwds-logo-150px.png
+    logo-alt: "Real World Data Science brand"
+    title: false
+    collapse-below: lg
+    right:
+      - text: "Home"
+        href: "about.html"
       - text: "Proposal"
         href: "Proposal/Proposal.html"
-      - section: "Meeting Minutes"
-        contents:
-          - text: "Meeting 1"
-            href: "Minutes/Minutes_01.html"
-            
-      - section: "User Guide"
-        contents:
-          - text: "User Guide"
-            href: ""
-      - section: "Shiny App"
-        contents: 
-          - text: "Shiny App"
-            href: ""
-      - section: "Poster"
-        contents: 
-          - text: "Poster"
-            href: ""            
+      - text: "User Guide"
+        href: "index.html"
+      - text: "Poster"
+        href: "index.html"
+      - text: "Meeting Minutes"
+        menu: 
+        - text: "Meeting 1"
+          href: Minutes/Minutes_01.qmd
+page-navigation: true
+
+back-to-top-navigation: false
 
 format:
   html:
-    theme: Tufte-LaTeX
-    css: styles.css
+    theme: [lux, rwds.scss]
+    css: rwds.css
     toc: true
+    grid:
+      sidebar-width: 0px
+      body-width: 1000px
+      margin-width: 250px
 
+execute: 
+  freeze: auto
 editor: visual
