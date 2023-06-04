@@ -17,15 +17,15 @@ editor_options:
 
 # Agenda(s)
 
-+---------------------------------------------------+
-| 1.  Setting up Project Github and Project Website |
-+---------------------------------------------------+
-| 2.  Discussion on the topic for VAA Group Project |
-+---------------------------------------------------+
-| 3.  Selection of Topic                            |
-+---------------------------------------------------+
-| 4.  Review on next agenda(s)                      |
-+---------------------------------------------------+
++---------------------------------------------------------------------------+
+| 1.  Setting up Project Github and Project Website                         |
++---------------------------------------------------------------------------+
+| 2.  Discussion on the topic for VAA Group Project                         |
++---------------------------------------------------------------------------+
+| 3.  Selection of Topic                                                    |
++---------------------------------------------------------------------------+
+| 4.  Review on next agenda(s)                                              |
++---------------------------------------------------------------------------+
 
 # 1. Setting up Project Github and Website
 
@@ -75,8 +75,8 @@ the reasoning for eliminating other cases are as follows:
     since data sets requires us to identify the four companies.
 
 -   Mini Case 3: There are potential in this Mini Case if more information are being shared in class.
-    However, the team felt that there are in comparison to Mini Case 2, we are less familiar with this
-    topic since time has been invested in our take home exercise.
+    However, the team felt that in comparison to Mini Case 2, we are less familiar with this topic since
+    time has been invested in our take home exercise.
 
 # 4. Review on Next Agenda(s)
 
