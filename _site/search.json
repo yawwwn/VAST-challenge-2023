@@ -14,6 +14,13 @@
     "text": "Agenda(s)\n\n\n\n\n\n\n\nSetting up Project Github and Project Website\n\n\n\n\nDiscussion on the topic for VAA Group Project\n\n\n\n\nSelection of Topic\n\n\n\n\nReview on next agenda(s)\n\n\n\n\n\n\n1. Setting up Project Github and Website\nYao Wen created the Project Github and send invites to the team members before creating a new Project in R. However, the team faced the issue of not being able to connect to Github. Jia Wen mentioned about the version control option on Github. Yao Wen tested it and found out that it works before proceeding to Netlify to create the website.\nJunseok reviewed the previous video uploaded by Prof Kam and assisted in the creation of the website. Thereafter, the team member took turn to commit and realized that changes are not reflected immediately. Yao Wen discovered that we should do a PULL before rendering/commit to avoid conflicting entries.\n\n\n2. Discussion of the Topic for VAA Group Project\nThe team members shared their opinions on the topic one by one to gain insights before drawing our conclusion:\nMini Case 1:\nJia Wen shared that the case does not seems to be as challenging as MC2 on first glance and is worth checking it out as we are able to choose between this case and Mini Case 3 for our third exercise. Yao Wen shared his concerns that Prof Kam mentioned the data set requires a lot of cleaning. Junseok tried to load the data set into R and agreed with what Yao Wen said.\nMini Case 2:\nJunseok shared that this case might be more suitable for us as we are in the midst of doing Take Home Exercise Two and have done the necessary data wrangling process. Jia Wen agreed and mentioned that she have tried to address question two of the task. The hscode in particular, is an important factor as it is a harmonized system. Yao Wen voiced his concern over the approach as each of us did a different approach for question one but Jia Wen shared that we could combined our approaches for a best fit model.\nMini Case 3:\nJunseok shared that he imported the data into R and found out that there are no null values but more analysis might be required. Jia Wen shared her concerns with regards to the business relationship as it is pretty vague. It could be to Business-to-Business relationship (B2B), Business-to-Consumers relationship (B2C) or it could be Distributor-Wholesaler- Retailers kind of relationship. Yao Wen shared that it might be geared towards the B2B, B2C way.\n\n\n3. Selection of Topic\nFor the selection of topic, our group have decided to choose Mini Case 2 as our choice of project and the reasoning for eliminating other cases are as follows:\n\nMini Case 1: Requires more data preparation which might be too time consuming and perceived ambiguity since data sets requires us to identify the four companies.\nMini Case 3: There are potential in this Mini Case if more information are being shared in class. However, the team felt that there are in comparison to Mini Case 2, we are less familiar with this topic since time has been invested in our take home exercise.\n\n\n\n4. Review on Next Agenda(s)\nThe team has targeted to complete the project proposal in the next meeting and look beyond our question of Take Home Exercise Two to see if we are able to address Question three and four of the challenge. The team has agreed to meet after VAA class to discuss the approach and split the work allocation of the proposal.\n\n\n5. End of Meeting\nThe meeting ended at 1800. The next meeting would convene on Saturday, 3rd June 2023 at 1600."
   },
   {
+    "objectID": "Minutes/Minutes_02.html",
+    "href": "Minutes/Minutes_02.html",
+    "title": "Project Meeting 02",
+    "section": "",
+    "text": "Agenda(s)\n\n\n\n\n\n\n\nDiscussion on Project Approach\n\n\n\n\nWork Allocation for Project Proposal\n\n\n\n\nReview on next agenda(s)\n\n\n\n\n\n\n1. Discussion on Project Approach\nThe team members shared their individual approach and the flow based on Take Home Exercise 2 and agreed that we will use Jia Wen’s approach for the time being and do the necessary fine tuning during the project.\nThe team also agreed that more time should be taken to explore the different literature reviews available to understand the factors that maybe related to illegal fishing. Junseok recapped the trans-shipment methodologies that he have read in the literature review that Prof Kam’s shared.\nYao Wen suggested for all of us to work on the common Git, and reminded the team to always pull first before pushing anything. Jia Wen shared some useful links for themes on quarto website.\n\n\n2. Work Allocation on Project Proposal\nThe tasks have been allocated as follows:\n\n\n\nDeliverables\nAssigned to\n\n\n\n\nBackground\nYao Wen\n\n\nProject Topic\nYao Wen\n\n\nMotivation\nYao Wen\n\n\nApproach\nJia Wen (Junseok to add)\n\n\nPlots\nJia Wen (Junseok to add)\n\n\nLiterature Review\nJunseok\n\n\n\n\n\n3. Review on next agenda(s)\nThe team has decided to look into the design layout of Shiny application during the next project meeting. In addition, the team members agreed to keep a lookout for Mini Case 3. Members will explore question one of Mini Case 3 in the coming week before the project meeting to discuss if it is worth switching.\n\n\n5. End of Meeting\nThe meeting ended at 1700. The next meeting would convene on Saturday, 10th June 2023 at 1600."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About Us",
@@ -49,24 +56,10 @@
     "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
   },
   {
-    "objectID": "Untitled.html#quarto",
-    "href": "Untitled.html#quarto",
-    "title": "test",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
     "objectID": "Untitled.html#running-code",
     "href": "Untitled.html#running-code",
     "title": "test",
     "section": "Running Code",
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
-    "objectID": "Minutes/Minutes_02.html",
-    "href": "Minutes/Minutes_02.html",
-    "title": "Project Meeting 02",
-    "section": "",
-    "text": "Agenda(s)\n\n\n\n\n\n\n\nDiscussion on Project Approach\n\n\n\n\nWork Allocation for Project Proposal\n\n\n\n\nXXX\n\n\n\n\nReview on next agenda(s)\n\n\n\n\n\n\n1. Discussion on Project Approach\nThe team members shared their individual approach based on Take Home Exercise 2 and agreed that we will use Jia Wen’s approach for the time being and do the necessary fine tuning during the project.\nThe team also agreed that more time should be taken to explore the different literature reviews available to understand the factors that maybe related to illegal fishing. Junseok recapped the trans-shipment methodologies that he have read in the literature review that Prof Kam’s shared.\n\n\n2. Work Allocation on Project Proposal\nJW suggested we open a Telegram group instead of Whatsapp for easier communications.  \nYW suggested for all of us to work on the Common Git, and reminded the team to always pull first before push anything\nJW shared useful links for themes: https://quarto.org/docs/gallery/#websites"
   }
 ]

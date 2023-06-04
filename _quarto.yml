@@ -3,14 +3,14 @@ project:
 
 website:
   title: "ISSS608-VAA Project Website"
-  image: images/fisheye.png
+  image: images/fisheye_rev.png
   open-graph: true
   site-url: "http:isss608-vast-2023-grp11.netlify.app"
   repo-url: "https://github.com/yawwwn/VAST-challenge-2023"
   navbar:
     background: "#f0eeeb"
-    logo: image/fisheye.png
-    logo-alt: "Real World Data Science brand"
+    logo: image/fisheye_rev.png
+    logo-alt: "ISSS608 VAA Group 9"
     title: false
     collapse-below: lg
     right:
@@ -26,6 +26,8 @@ website:
         menu: 
         - text: "Meeting 1"
           href: Minutes/Minutes_01.qmd
+        - text: "Meeting 2"
+          href: Minutes/Minutes_02.qmd
 page-navigation: true
 
 back-to-top-navigation: false
