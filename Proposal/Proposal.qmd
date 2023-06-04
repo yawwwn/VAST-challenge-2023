@@ -2,35 +2,64 @@
 title: "Visual Analytics Project Proposal"
 description: "VAST Challenge 2023"
 author:
-  - name: Group9:<br> Kim Junseok <br> Oh Jia Wen <br> Thng Yao Wen <br>
+  - name: Kim Junseok <br> Oh Jia Wen <br> Thng Yao Wen <br>
     #url: 
 date: '2023-06-03'
 format: html
-output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
-editor_options: 
-  markdown: 
-    wrap: 72
+sidebar: false
+page-layout: article
+toc: false
+title-block-banner: true
 ---
 
 # 1. Background
 
-In this project, our team will attempt the [VAST Challenge
-2023](https://vast-challenge.github.io/2023/) and build a web-enabled
-visual analytics application by using R Shiny. The challenge focuses on
-illegal
+In this project, our team will attempt the [VAST Challenge 2023](https://vast-challenge.github.io/2023/) and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal
 
 # 2. Project Topic
 
-Our group has chosen to take on [Mini-Challenge 2: Identify
-Patterns](https://vast-challenge.github.io/2023/MC2.html). In this
-challenge, The country of Oceanus has sought FishEye International's
-help in identifying companies possibly engaged in illegal, unreported,
-and unregulated (IUU) fishing. Using visual analytics, our team strives
-to help identify companies that may be engaged in illegal fishing.
+Our group has chosen to take on [Mini-Challenge 2: Identify Patterns](https://vast-challenge.github.io/2023/MC2.html). In this challenge, The country of Oceanus has sought FishEye International's help in identifying companies possibly engaged in illegal, unreported, and unregulated (IUU) fishing. Using visual analytics, our team strives to help identify companies that may be engaged in illegal fishing.
 
 # 3. Motivation
 
+The motivation of our group on the mini-case challenge 2 is as such:
+
+1.  Our group will be providing insights on the relationships between fishing participants in varying times. Organizations will have a **better understanding of business relationship patterns.** 
+
+2.  From the sets of **predicted knowledge graph links** FishEye has provided, we will touch upon **which ones are most reliable links.**
+
+3.  Our attempt from #2 will not only reveal completedness of program tool provided, but also **new patterns or anomalies that are only present when new links are added.** 
+
+4.  Lastly, we will be shedding lights on the potentially suspicious participants. Here, we attempt to make use of techniques for determining illegal activity within the network, so that governments and regulatory bodies can make better informed decisions. 
+
 # 4. Approach
+
+The following are the approaches by our team to address the different questions.
+
+## 4.1 Evaluating link inference bundled data sets
+
+Our approach is identifying which bundle is reliable is as follows:
+
+-   Plot a heatmap of the number of transactions over the years to observe the temporal trend and anomalies. The resulting year would be used as the timeframe in the subsequent network graph.
+
+    ![](/image/treemap.png)
+
+-   Next, plot a treemap based on attributes of the edges, specifically the HSCodes and the Year of the individual trade records. The resulting top HSCode and as well as the anomaly (in this case, the spike in the median weight) will be identified and similarly used for the network graph
+
+    ![](/image/heatmap.png)
+
+-   Another treemap is plotted using the Bundled data based on HSCode Chapter30.
+
+![](/image/Chap30treemap.png)
+
+-   Subsequently, a stacked bar chart is plotted to observe which HSCodes are completed to identify which bundles are reliable.
+
+![](/image/Q1Q2.png)
+
+The plotted graphs will then be used to identify new patterns or anomalies that are present when new links are added.
+
+## 4.2 Identifying which companies are likely to involve in IUU
+
+![](/image/Q3Q4.png)
+
+## 
