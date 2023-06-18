@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/index.html</loc>
-    <lastmod>2023-06-04T13:44:34.225Z</lastmod>
+    <lastmod>2023-06-18T08:14:39.988Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_01.html</loc>
@@ -15,17 +15,5 @@
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/about.html</loc>
     <lastmod>2023-06-04T13:44:36.367Z</lastmod>
-  </url>
-  <url>
-    <loc>http:isss608-vast-2023-grp11.netlify.app/Proposal/Proposal.html</loc>
-<<<<<<< HEAD
-    <lastmod>2023-06-04T13:44:37.211Z</lastmod>
-=======
-    <lastmod>2023-06-04T13:08:27.103Z</lastmod>
->>>>>>> 67bdb761a7823ba4346d65e222d82c262606d60e
-  </url>
-  <url>
-    <loc>http:isss608-vast-2023-grp11.netlify.app/Untitled.html</loc>
-    <lastmod>2023-06-04T13:44:37.959Z</lastmod>
   </url>
 </urlset>
