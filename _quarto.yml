@@ -30,6 +30,8 @@ website:
           href: Minutes/Minutes_01.qmd
         - text: "Meeting 2"
           href: Minutes/Minutes_02.qmd
+        - text: "Meeting 3"
+          href: Minutes/Minutes_03.qmd
         
 page-navigation: true
 
