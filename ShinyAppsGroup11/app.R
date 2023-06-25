@@ -1,12 +1,14 @@
 
 
 library(shiny)
+library(shiny.semantic)
 library(bslib)
 library(dplyr)
 library(ggplot2)
 library(thematic)
-library(jsonlite)
 library(tidyverse)
+library(tidygraph)
+library(jsonlite)
 
 
 mc3_data <- fromJSON("data/MC3.json")
@@ -89,13 +91,59 @@ cards <- list(
     full_screen = TRUE,
     card_header("Revenue by Country"),
     plotOutput("revenue_plot")
+  ),
+  card(
+    full_screen = FALSE,
+    card_header("Companies by Country"),
+    plotOutput("company_plot")
+  ),
+  card(
+    full_screen = FALSE,
+    card_header("Ownership by Individual"),
+    plotOutput("ownership_plot")
   )
 )
 
+##Parent Value_box
+
+value_box_1 <- value_box(
+  title = "Median of the Number of Companies Owned per Person",
+  value = "2 Companies",
+  showcase = bsicons::bs_icon("align-bottom")
+)
+
+value_box_2 <- value_box(
+  title = "Median of the Number of Companies Contacts per Person",
+  value =  "1 Company",
+  showcase = bsicons::bs_icon("align-center"),
+  theme_color = "dark"
+)
+
+value_box_3 <- value_box(
+  title = "Median Revenue per Person",
+  value = "$25,000",
+  showcase = bsicons::bs_icon("handbag"),
+  theme_color = "secondary"
+)
+
+value_box_parent <- column(
+  width = 12, 
+  height = 18,
+  value_box_1,
+  value_box_2,
+  value_box_3
+)
 
 ui <- navbarPage(
   title = "Group 11",
   theme = bs_theme(version = 5, bootswatch = "minty"), # Choose a theme
+  #Cards
+  layout_columns(
+    fill = FALSE,
+    col_widths = c(4, 4, 4, 4, 4),
+    row_heights = c(1, 1),
+    cards[[1]], cards[[2]], value_box_parent, cards[[3]], cards[[4]]),
+  
   # First panel tab
   tabPanel(
     "Dashboard",
@@ -118,10 +166,8 @@ ui <- navbarPage(
       plotOutput("")
     )
   ),
-  
-  #Cards
-  !!!cards
 )
+
 
 # Define server logic
 server <- function(input, output) {
@@ -160,7 +206,7 @@ server <- function(input, output) {
       group_by(country) %>%
       summarise(revenue_omu = sum(revenue_omu)) %>%
       ggplot(aes(x = reorder(country, -revenue_omu), y = revenue_omu)) +
-      geom_histogram(stat = "identity", fill = '#3498db') +
+      geom_bar(stat = "identity", fill = '#3498db') +
       geom_text(aes(label = format(revenue_omu, big.mark = ",")), vjust = -0.5) +
       scale_y_continuous(labels = function(x) format(x/1000000, nsmall = 1, big.mark = ".", decimal.mark = ",")) +
       theme_minimal() +
@@ -168,6 +214,46 @@ server <- function(input, output) {
            title = 'Distribution of Revenue by Country',
            subtitle = 'ZH, Rio Isla, and Utoporiana were the top 3 countries where most revenue was generated') +
       theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  })
+  
+  # Company plot
+  output$company_plot <- renderPlot({
+    mc3_nodes1 %>%
+      group_by(id) %>%
+      summarise(total_countries = n_distinct(country)) %>%
+      filter(total_countries > 3) %>%
+      arrange(desc(total_countries)) %>%
+      ggplot(aes(x = id, y = total_countries)) +
+      geom_bar(stat = "identity", fill = '#3498db') +
+      geom_text(aes(label = format(total_countries, big.mark=",")), vjust = -0.5) +
+      theme_minimal() +
+      labs(x = "Companies", y = "Number of Countries",
+           title = 'Distribution of Company located in multiple countries',
+           subtitle = 'Aqua Aura SE Marine is the most diversified in terms of countries locations') +
+      scale_y_continuous(breaks = seq(0, 10, by = 2),
+                         labels = seq(0, 10, by = 2))+
+      theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+      theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = 1, 
+                                       size = 10, margin = margin(t = 0.2, r = 0, b = 0, l = 0)))
+  })
+  
+  # Ownership plot
+  output$ownership_plot <- renderPlot({
+    mc3_nodes1 %>%
+      group_by(id) %>%
+      filter(total_relation > 8) %>%
+      arrange(desc(total_relation)) %>%
+      ggplot(aes(reorder(x = id, -total_relation), y = total_relation)) +
+      geom_bar(stat = "identity", fill = '#3498db') +
+      geom_text(aes(label = format(total_relation, big.mark=",")), vjust = -0.5) +
+      theme_minimal() +
+      labs(x = "Companies", y = "Number of relationships",
+           title = 'Distribution of Individuals who have the most amount of Company relationships') +
+      scale_y_continuous(breaks = seq(0, 10, by = 2),
+                         labels = seq(0, 10, by = 2))+
+      theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+      theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = 1, 
+                                       size = 10, margin = margin(t = 0.2, r = 0, b = 0, l = 0)))
   })
 }
 

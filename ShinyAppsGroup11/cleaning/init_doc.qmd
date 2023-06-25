@@ -22,6 +22,8 @@ mc3_nodes <- as_tibble(mc3_data$nodes) %>%
          type = as.character(type)                    # Convert to character type
   ) %>%
   select(id,country,type,revenue_omu,product_services)
+
+
 ```
 
 ```{r}
@@ -142,11 +144,11 @@ edges_df2 <- edges_df %>%
 ### 0. Export in CSV
 
 ```{r}
-write.csv(mc3_nodes1, file = "mc3_nodes1.csv")
+write.csv(mc3_nodes1, file = "data/mc3_nodes1.csv")
 ```
 
 ```{r}
-write.csv(mc3_nodes1, file = "mc3_nodes2.csv")
+write.csv(mc3_nodes1, file = "data/mc3_nodes2.csv")
 ```
 
 ### 1.1 Distribution of Count per Top 3 countries Panel Tab 1
@@ -206,7 +208,7 @@ mc3_nodes1 %>%
   theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1))
 ```
 
-### 2 Distribution of Company located in multiple companies
+### 2 Distribution of Company located in multiple countries
 
 ```{r}
   mc3_nodes1 %>%
