@@ -1,148 +1,163 @@
 
-
 library(shiny)
-library(shiny.semantic)
 library(bslib)
-library(dplyr)
-library(ggplot2)
-library(thematic)
 library(tidyverse)
-library(tidygraph)
 library(jsonlite)
+library(tidytext)
+library(ldatuning)
+library(wordcloud2)
+library(topicmodels)
+library(plotly)
+library(forcats)
 
+options(scipen = 999) 
 
-mc3_data <- fromJSON("data/MC3.json")
+#importing the data 
+MC3_challenge <- fromJSON("data/MC3.json")
 
-mc3_nodes <- as_tibble(mc3_data$nodes) %>%
-  distinct() %>% # Remove duplicate rows
-  mutate(country = as.character(country),             # Convert to character type
-         id = as.character(id),                       # Convert to character type
-         product_services = as.character(product_services),   # Convert to character type
-         revenue_omu = as.numeric(ifelse(revenue_omu == "Unknown" | revenue_omu == "NULL", 0, revenue_omu)),
-         type = as.character(type)                    # Convert to character type
-  ) %>%
-  select(id,country,type,revenue_omu,product_services)
-
-#| code-fold: false
-#| fig-height: 3.5
-#| fig-width: 7
-#Extracting edges
-mc3_edges_raw <- as_tibble(mc3_data$links) %>% 
-  distinct() %>% # Remove duplicate rows
-  mutate(source = as.character(source), # Convert to character type
-         target = as.character(target), # Convert to character type
-         type = as.character(type)) %>% # Convert to character type
-  rename(from = source,
-         to = target) %>% #ensure compatibility with `tidygraph` functions
-  group_by(from, to, type) %>%
+#extracting edges 
+MC3_edges <-as_tibble(MC3_challenge$links) %>%
+  distinct() %>%
+  mutate(source = as.character(source),
+         target = as.character(target),
+         type = as.character(type)) %>%
+  group_by(source,target, type) %>%
   summarise(weights = n()) %>%
-  filter(from!=to) %>% #to ensure that no record with similar source and target.
+  filter (source != target) %>%
   ungroup()
 
-mc3_nodes_group <- mc3_nodes %>% #given some companies/nodes have multiple rows in different countries
-  group_by(id) %>%
-  summarize(total_revenue_omu = sum(revenue_omu, na.rm = TRUE))
+#extrading nodes 
+MC3_nodes <-as_tibble(MC3_challenge$nodes) %>%
+  mutate(country = as.character(country),
+         id = as.character(id),
+         product_services = as.character(product_services),
+         revenue_omu = as.numeric(as.character(revenue_omu)),
+         type = as.character(type)) %>%
+  select(id,country,type,revenue_omu,product_services)
 
-#Extracting edges
-mc3_edges <- mc3_edges_raw %>% 
-  left_join(mc3_nodes_group, by = c("from" = "id")) %>% 
-  select(from, to, type, weights, total_revenue_omu) 
+#default masterlist 
+id1 <- MC3_edges %>%
+  select(source) %>%
+  rename(id = source)
+id2 <- MC3_edges %>%
+  select(target) %>%
+  rename(id = target)
+MC3_nodes_master <- rbind(id1, id2) %>%
+  distinct() %>%
+  left_join(MC3_nodes,
+            unmatched = "drop")
 
+#create new node df to include id number
+MC3_nodes_Masterlist <- MC3_nodes_master %>%
+  select(id) %>%
+  distinct() %>%
+  rename(label = id) %>%
+  ungroup()
 
-summary_data <- mc3_edges %>%
-  group_by(to) %>%
-  rename(id = to) %>%
-  summarize(total_revenue_omu = sum(total_revenue_omu, na.rm = TRUE),
-            companies_owned = sum(type == "Beneficial Owner"),
-            companies_contact = sum(type == "Company Contacts"),
-            total_relation = companies_owned+companies_contact)%>%
-  arrange(desc(total_relation)) #sort total_relation by descending
+#add ID to nodes dataframe
+MC3_masternodes <- MC3_nodes_Masterlist %>%
+  mutate(id = as.character(1:nrow(MC3_nodes_Masterlist))) %>%
+  relocate(id,label) %>%
+  ungroup()
 
-#| code-fold: false
-#| fig-height: 3.5
-#| fig-width: 7
+#to append correspoinding id through left_join 
+MC3_edges_addID <- MC3_edges %>%
+  rename(sourcelabel = source, targetlabel = target) %>%
+  left_join(MC3_masternodes, by = c("sourcelabel" = "label")) %>%
+  rename(source = id) %>%
+  left_join(MC3_masternodes, by = c("targetlabel" = "label")) %>%
+  rename(target = id) %>%
+  relocate(source,target)
 
-id1 <- mc3_edges %>% # extract the source column from the edges dataframe and rename it to id1
-  select(from) %>%
-  rename(id = from)
+#word related code from this line
+#unnest words
+token_nodes <- MC3_nodes %>%
+  unnest_tokens(word, product_services)
 
-id2 <- mc3_edges %>% # extract the target column from the edges dataframe and rename it to id2
-  select(to) %>%
-  rename(id = to)
+#remove stop_words
+stopwords_removed <- token_nodes %>% 
+  anti_join(stop_words)
 
-mc3_nodes1 <- rbind(id1, id2) %>% # combine the id1 and id2 dataframes 
-  distinct() %>% # remove the duplicates
-  left_join(mc3_nodes, by = "id",
-            unmatched = "drop") %>%
-  left_join(summary_data, by = "id") %>%
-  replace_na(list(companies_owned = 0, companies_contact = 0, total_relation = 0))%>% #replace NA values with 0
-  mutate(new_type = ifelse(companies_owned>0 & companies_contact>0, "Beneficial Owner + Company Contact",ifelse(companies_owned>0 & companies_contact==0, "Beneficial Owner", ifelse(companies_owned==0 & companies_contact>0, "Company Contact",NA_character_)))) %>%
-  mutate(revenue_omu = ifelse(is.na(revenue_omu), 0, revenue_omu))
-#create new attributes for node
+#remove generic words 
+remove_characters <- c("character", "0","unknown","products","services",
+                       "including", "source", "offers","range", "related")
 
-###Cards begin
-cards <- list(
-  card(
-    full_screen = TRUE,
-    card_header("Counts by Country"),
-    plotOutput("counts_plot")
-  ),
-  card(
-    full_screen = TRUE,
-    card_header("Revenue by Country"),
-    plotOutput("revenue_plot")
-  ),
-  card(
-    full_screen = FALSE,
-    card_header("Companies by Country"),
-    plotOutput("company_plot")
-  ),
-  card(
-    full_screen = FALSE,
-    card_header("Ownership by Individual"),
-    plotOutput("ownership_plot")
-  )
+#create dataframe of each word with frequency 
+stopwords_removed_freq <- stopwords_removed %>%
+  filter(!word %in% remove_characters) %>%
+  group_by(word) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  ungroup()
+
+#generate word cloud 
+set.seed(1234) #for reproductibility
+wordcloud2(data=stopwords_removed_freq, size=1.6, color='random-dark')
+
+token_nodes$word[token_nodes$word == "character"] <- "NA"
+token_nodes$word[token_nodes$word == "0"] <- "NA"
+
+#remove stop_words
+stopwords_removed <- token_nodes %>% 
+  anti_join(stop_words) %>%
+  filter(!word %in% c("NA", "unknown", "products"))
+
+dim(stopwords_removed)
+
+stopwords_removed %>%
+  count(word, sort = TRUE) %>%
+  top_n(15) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = word, y = n)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip() +
+  labs(x = "Count",
+       y = "Unique words",
+       title = "Count of unique words found in product_services field")
+
+# using as.matrix()
+MC3_text <- stopwords_removed %>%
+  count(id, word) %>%  # count each word used in each identified review 
+  cast_dtm(id, word, n) %>%  # use the word counts by reviews  to create a DTM
+  as.matrix()
+
+# create models with different number of topics
+result <- ldatuning::FindTopicsNumber(
+  MC3_text,
+  topics = seq(from = 2, to = 20, by = 1),
+  metrics = c("Griffiths2004", "CaoJuan2009", "Arun2010", "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 77),
+  verbose = TRUE
 )
 
-##Parent Value_box
+FindTopicsNumber_plot(result)
 
-value_box_1 <- value_box(
-  title = "Median of the Number of Companies Owned per Person",
-  value = "2 Companies",
-  showcase = bsicons::bs_icon("align-bottom")
+# Global variables here
+n <- 1
+
+
+cards3 <- list(
+
+card(full_screen = TRUE, card_header("Word Cloud"),
+     card_body(numericInput('size', 'Size of wordcloud', n), wordcloud2Output('wordcloud2')
+     )),
+
+card(full_screen = TRUE, card_header("1) Select Number of Topic Group"),
+     layout_sidebar(
+       fillable = TRUE,
+       sidebar = sidebar(
+         numericInput("topic_group", "Number of Topic Group", value = 4, min = 2, max = 20, step = 1),
+         actionButton("run_button", "Generate Result")
+       ), card_body(plotlyOutput("myplot"))))
 )
 
-value_box_2 <- value_box(
-  title = "Median of the Number of Companies Contacts per Person",
-  value =  "1 Company",
-  showcase = bsicons::bs_icon("align-center"),
-  theme_color = "dark"
-)
 
-value_box_3 <- value_box(
-  title = "Median Revenue per Person",
-  value = "$25,000",
-  showcase = bsicons::bs_icon("handbag"),
-  theme_color = "secondary"
-)
-
-value_box_parent <- column(
-  width = 12, 
-  height = 18,
-  value_box_1,
-  value_box_2,
-  value_box_3
-)
-
+# Define the UI
 ui <- navbarPage(
-  title = "Group 11",
-  theme = bs_theme(version = 5, bootswatch = "minty"), # Choose a theme
-  #Cards
-  layout_columns(
-    fill = FALSE,
-    col_widths = c(4, 4, 4, 4, 4),
-    row_heights = c(1, 1),
-    cards[[1]], cards[[2]], value_box_parent, cards[[3]], cards[[4]]),
+  title = "Group 11 VAA Project",
+  theme = bs_theme(version = 5, bootswatch = "minty"),
   
   # First panel tab
   tabPanel(
@@ -159,103 +174,58 @@ ui <- navbarPage(
     )
   ),
   
+  #Cards #3 begin ----------------------------------------------
+  
   # Third panel tab
   tabPanel(
     "Topic Analysis",
-    fluidPage(
-      plotOutput("")
+    layout_columns(
+      fill = FALSE,
+      col_width = c(12, 12),
+      row_heights = c(1.5, 1.5),
+      cards3[[1]],
+      cards3[[2]]
     )
-  ),
+  )
 )
 
 
-# Define server logic
+# Define the server code
 server <- function(input, output) {
-  
-  # Counts plot
-  output$counts_plot <- renderPlot({
-    mc3_nodes1_Other <- mc3_nodes1 %>%
-      filter(!is.na(country)) %>%
-      group_by(country) %>%
-      summarise(counts = n()) %>%
-      arrange(desc(counts)) %>%
-      mutate(country = ifelse(row_number() > 3, "Other", country)) %>%
-      group_by(country) %>%
-      summarise(counts = sum(counts)) %>%
-      mutate(counts = as.numeric(counts)) %>%
-      arrange(desc(counts)) 
-    
-    ggplot(mc3_nodes1_Other, aes(x = reorder(country, -counts), y = counts)) +
-      geom_bar(stat = "identity", fill = '#3498db') +
-      geom_text(aes(label = format(counts, big.mark = ",")), vjust = -0.5) +
-      theme_minimal() +
-      labs(x = "Country", y = "Counts",
-           title = 'Count of Nodes by Country',
-           subtitle = 'ZH, Oceanus, and Marebak were the top 3 countries where most nodes domiciled') +
-      theme(axis.title.y = element_text(angle = 0, vjust = 0.5, hjust = 1))
+  set.seed(1234)  # Set the seed to 1234
+
+  output$wordcloud2 <- renderWordcloud2({
+    wordcloud2(data=stopwords_removed_freq, input$size)
   })
   
-  # Revenue plot
-  output$revenue_plot <- renderPlot({
-    mc3_nodes1 %>%
-      filter(!is.na(country)) %>%
-      group_by(country) %>%
-      summarise(revenue_omu = sum(revenue_omu)) %>%
-      arrange(desc(revenue_omu)) %>%
-      mutate(country = ifelse(row_number() > 3, "Other", country)) %>%
-      group_by(country) %>%
-      summarise(revenue_omu = sum(revenue_omu)) %>%
-      ggplot(aes(x = reorder(country, -revenue_omu), y = revenue_omu)) +
-      geom_bar(stat = "identity", fill = '#3498db') +
-      geom_text(aes(label = format(revenue_omu, big.mark = ",")), vjust = -0.5) +
-      scale_y_continuous(labels = function(x) format(x/1000000, nsmall = 1, big.mark = ".", decimal.mark = ",")) +
-      theme_minimal() +
-      labs(x = "Country", y = "Revenue in mil",
-           title = 'Distribution of Revenue by Country',
-           subtitle = 'ZH, Rio Isla, and Utoporiana were the top 3 countries where most revenue was generated') +
-      theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  topicModel <- eventReactive(input$run_button, {
+    print("Run button is working!")
+    LDA(MC3_text, input$topic_group , method = "Gibbs", control = list(iter = 500, verbose = 25))
   })
   
-  # Company plot
-  output$company_plot <- renderPlot({
-    mc3_nodes1 %>%
-      group_by(id) %>%
-      summarise(total_countries = n_distinct(country)) %>%
-      filter(total_countries > 3) %>%
-      arrange(desc(total_countries)) %>%
-      ggplot(aes(x = id, y = total_countries)) +
-      geom_bar(stat = "identity", fill = '#3498db') +
-      geom_text(aes(label = format(total_countries, big.mark=",")), vjust = -0.5) +
-      theme_minimal() +
-      labs(x = "Companies", y = "Number of Countries",
-           title = 'Distribution of Company located in multiple countries',
-           subtitle = 'Aqua Aura SE Marine is the most diversified in terms of countries locations') +
-      scale_y_continuous(breaks = seq(0, 10, by = 2),
-                         labels = seq(0, 10, by = 2))+
-      theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-      theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = 1, 
-                                       size = 10, margin = margin(t = 0.2, r = 0, b = 0, l = 0)))
+  lda_topics <- reactive({
+    topicModel() %>%
+      tidy(matrix = "beta")
   })
   
-  # Ownership plot
-  output$ownership_plot <- renderPlot({
-    mc3_nodes1 %>%
-      group_by(id) %>%
-      filter(total_relation > 8) %>%
-      arrange(desc(total_relation)) %>%
-      ggplot(aes(reorder(x = id, -total_relation), y = total_relation)) +
-      geom_bar(stat = "identity", fill = '#3498db') +
-      geom_text(aes(label = format(total_relation, big.mark=",")), vjust = -0.5) +
-      theme_minimal() +
-      labs(x = "Companies", y = "Number of relationships",
-           title = 'Distribution of Individuals who have the most amount of Company relationships') +
-      scale_y_continuous(breaks = seq(0, 10, by = 2),
-                         labels = seq(0, 10, by = 2))+
-      theme(axis.title.y = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-      theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = 1, 
-                                       size = 10, margin = margin(t = 0.2, r = 0, b = 0, l = 0)))
+  word_probs <- reactive({
+    lda_topics() %>%
+      group_by(topic) %>%
+      top_n(15, beta) %>%
+      ungroup() %>%
+      mutate(term2 = fct_reorder(term, beta))
+  })
+  
+  output$myplot <- renderPlotly({
+    ggplot(word_probs(), aes(term2, beta, fill = as.factor(topic))) +
+      geom_col(show.legend = FALSE) +
+      facet_wrap(~ topic, scales = "free") +
+      coord_flip()
   })
 }
 
 
-shinyApp(ui, server)
+# Return a Shiny app object
+
+shinyApp(ui = ui, server = server)
+
