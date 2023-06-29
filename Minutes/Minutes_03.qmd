@@ -1,0 +1,89 @@
+---
+title: "Project Meeting 03"
+description: "Sunday, 18th June 2023 from 1600 to 1800 <br> Microsoft Teams Meeting<br>"
+author:
+  - name: Oh Jia Wen
+    #url: 
+date: '2023-06-19'
+format: html
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 110
+---
+
+# Agenda(s)
+
++------------------------------------------------------------------------------------+
+| 1.  Discussion to switch Project Topic                                             |
++------------------------------------------------------------------------------------+
+| 2.  Design layout of Shiny Application                                             |
++------------------------------------------------------------------------------------+
+| 3.  Allocate on the work load                                                      |
++------------------------------------------------------------------------------------+
+
+# 1. Discussion to switch Project Topic
+
+The team members shared their individual approach on question one of Mini Case 3 since it was part of our Take
+Home Exercise 3. Jia Wen shared her approach on how she identified the anormalies. She began by exploratory
+data visualization before looking at the network graphs. Then, she identified the connections which led to the
+anomalies. Yao Wen shared that he have similar approach but he identified the connections through network
+graphs.
+
+Junseok did a slightly different approach as he did some data wrangling and text mining to filter for words
+associated with fishes based on the hscode. During the discussion, the team members felt that they are more
+confident in doing Mini Case 3 instead and decided to make a switch from Mini Case 2.
+
+# 2. Design Layout of Shiny Application
+
+Junseok shared that he have created the skeleton of the Shiny Application and linked our R Shiny to our web.
+Then the team discussed on the design layout for Shiny Application.
+
+Jia Wen suggested that we should begin with the **Dashboard**. Yao Wen added that we should have some filter
+option, and allows for filtering through the drop down list. The team brainstormed and listed down the
+variables. JunSeok mentioned that we could use the Bar Chart for this portion.
+
+Team Member, Yao Wen shared his thoughts about the **Network Visualization** by allowing an option for
+Centrality, a scale to filter for percentile, and an option to determine the size of Node. Jia Wen agreed with
+the form for visualization and mentioned that we could put the Output as a Network Graph and a Data Table.
+Junseok agreed as well and said that Prof Kam have mentioned about it in class.
+
+On the micro perspective, Yao Wen throw out some ideas where we could do a search based on ID, and another
+form of filter by Nth Degree. This way we are able to look into the different layers of relationship. Jia Wen
+mentioned that we could create the same output.
+
+As the team discussed on the business groups, Jia Wen shared how she categorized them based on the frequency
+in word cloud and manually grouping them into a broader category. Yao Wen mentioned that he did the similar
+word cloud but did another way of grouping. Junseok added that he did not look into the business groups. Both
+of the team members agreed that we could do the **statistical** aspect by adding a filter based on the
+identified business groups for the X axis and a proposed list for the Y-Axis.
+
+If an Y Axis is not chosen, the suggested output will be a Chi-Square test whereas if an output is chosen, we
+will do an Anova Test. Jia Wen proposed to standardize the output and do a Statistical Graph and a Confidence
+Level Test. The team wrapped up the discussion for the meeting.
+
+# 3. Allocation of Work
+
+The tasks have been allocated as follows:
+
+| Deliverables        | Assigned to |
+|---------------------|-------------|
+| Shiny Application   | Junseok     |
+| Dashboard           | Junseok     |
+| Network (Macro)     | Yao Wen     |
+| Network (Micro)     | Yao Wen     |
+| Statistical Graph   | Jia Wen     |
+| Confidence Interval | Jia Wen     |
+
+# 4. Review on next agenda(s)
+
+The team has decided to explore their respective allocation individually and to set up a consultation time
+slot with Prof Kam to discuss the feasibility of our storyboard and to work on our deliverables in the Shiny
+Application.
+
+# 5. End of Meeting
+
+The meeting ended at 1800. The next meeting would convene on Saturday, 24th June 2023 at 1600.

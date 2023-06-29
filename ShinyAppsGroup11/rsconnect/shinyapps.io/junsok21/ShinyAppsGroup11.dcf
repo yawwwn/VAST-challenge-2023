@@ -1,0 +1,14 @@
+name: ShinyAppsGroup11
+title: ShinyAppsGroup11
+username:
+account: junsok21
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9327112
+bundleId: 7385070
+url: https://junsok21.shinyapps.io/ShinyAppsGroup11/
+when: 1687680107.23522
+lastSyncTime: 1687680107.23523
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: cleaning/data/MC3.json|cleaning/data/mc3_nodes1.csv|cleaning/data/mc3_nodes2.csv|cleaning/init_doc.qmd

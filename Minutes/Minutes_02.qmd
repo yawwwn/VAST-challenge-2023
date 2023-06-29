@@ -1,6 +1,6 @@
 ---
 title: "Project Meeting 02"
-description: "Saturday, 3rd June 2023 from 1600 to 1500 <br> SCIS B1.1<br>"
+description: "Saturday, 3rd June 2023 from 1600 to 1500 <br> SCIS1 SR-B1.1<br>"
 author:
   - name: Thng Yao Wen
     #url: 
@@ -12,35 +12,59 @@ output:
     toc: true
 editor_options: 
   markdown: 
-    wrap: 106
+    wrap: 64
 ---
 
 # Agenda(s)
 
-+------------------------------------------+
-| 1.  Discussion on Project Approach       |
-+------------------------------------------+
-| 2.  Work Allocation for Project Proposal |
-+------------------------------------------+
-| 3.  XXX                                  |
-+------------------------------------------+
-| 4.  Review on next agenda(s)             |
-+------------------------------------------+
++---------------------------------------------------------------+
+| 1.  Discussion on Project Approach                            |
++---------------------------------------------------------------+
+| 2.  Work Allocation for Project Proposal                      |
++---------------------------------------------------------------+
+| 3.  Review on next agenda(s)                                  |
++---------------------------------------------------------------+
 
 # 1. Discussion on Project Approach
 
-The team members shared their individual approach based on Take Home Exercise 2 and agreed that we will
-use Jia Wen's approach for the time being and do the necessary fine tuning during the project.
+The team members shared their individual approach and the flow
+based on Take Home Exercise 2 and agreed that we will use Jia
+Wen's approach for the time being and do the necessary fine
+tuning during the project.
 
-The team also agreed that more time should be taken to explore the different literature reviews available
-to understand the factors that maybe related to illegal fishing. Junseok recapped the trans-shipment
-methodologies that he have read in the literature review that Prof Kam's shared.
+The team also agreed that more time should be taken to explore
+the different literature reviews available to understand the
+factors that maybe related to illegal fishing. Junseok recapped
+the trans-shipment methodologies that he have read in the
+literature review that Prof Kam's shared.
+
+Yao Wen suggested for all of us to work on the common Git, and
+reminded the team to always `pull` first before pushing
+anything. Jia Wen shared some useful links for themes on [quarto
+website.](https://quarto.org/docs/gallery/#websites)
 
 # 2. Work Allocation on Project Proposal
 
-JW suggested we open a Telegram group instead of Whatsapp for easier communications.  
+The tasks have been allocated as follows:
 
-YW suggested for all of us to work on the Common Git, and reminded the team to always pull first before
-push anything
+| Deliverables      | Assigned to              |
+|-------------------|--------------------------|
+| Background        | Yao Wen                  |
+| Project Topic     | Yao Wen                  |
+| Motivation        | Yao Wen                  |
+| Approach          | Jia Wen (Junseok to add) |
+| Plots             | Jia Wen (Junseok to add) |
+| Literature Review | Junseok                  |
 
-JW shared useful links for themes: https://quarto.org/docs/gallery/#websites
+# 3. Review on next agenda(s)
+
+The team has decided to look into the design layout of Shiny
+application during the next project meeting. In addition, the
+team members agreed to keep a lookout for Mini Case 3. Members
+will explore question one of Mini Case 3 in the coming week
+before the project meeting to discuss if it is worth switching.
+
+# 5. End of Meeting
+
+The meeting ended at 1700. The next meeting would convene on
+Saturday, 10th June 2023 at 1600.

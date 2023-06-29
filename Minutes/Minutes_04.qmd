@@ -1,0 +1,98 @@
+---
+title: "Project Meeting 04"
+description: "Sunday, 25th June 2023 from 1700 to 1800 <br> Microsoft Teams Meeting<br>"
+author:
+  - name: Kim Junseok
+    #url: 
+date: '2023-06-26'
+format: html
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 87
+---
+
+# Agenda(s)
+
++-------------------------------------+
+| 1.  Discussion on Shiny Application |
+|     1.  Dashboard                   |
+|     2.  Network Analysis            |
+|     3.  Topic Modelling             |
++-------------------------------------+
+| 3.  Review on next Agenda           |
++-------------------------------------+
+
+# 1. Discussion on Shiny Application
+
+The team had a consultation with Prof Kam on Tuesday, 20th June 2023 to discuss the
+feasibility of the storyboard. Prior to our current meeting, Jia Wen shared with Team
+Member, Yao Wen about the feedback given during the consultation as he could not make
+it due to work.
+
+## 1.1 Dashboard
+
+Junseok shared his current progress of the dashboard with the Team. However, the team
+members felt that the dashboard does not have any value add as it is filled with bar
+chart. Instead, Yao Wen suggested putting a treemap to replace one of the graph. Jia
+Wen suggested to look at her Take Home Exercise 3 as she did an interactive treemap
+with regards to the top 10 countries. She felt that the treemap is not a good
+representative in the dashboard. After some discussion, the team agreed to Yao Wen's
+suggestion of flipping the coordinates of the bar chart.
+
+Then, Jia wen suggested to include a small card slot in the dashboard with the word
+cloud to arose the user's interest in navigating through other pages in the shiny
+application. The team members agreed and Jia Wen would published her code on Github for
+Junseok to stitch. Furthermore, Yao Wen suggested to add some form of interactivity to
+the chart as the dashboard will be static.
+
+For better visualization, Junseok suggested looking at bullet graph by looking at 5-6
+topics and compare the average revenue of Fishery vs All Companies. The team members
+felt that we could give this a try. In addition, Jia Wen suggested to include a table
+for the company, beneficial owners, and company contacts which the team agreed. She
+will provide Junseok with the sketch design of the table.
+
+## 1.2 Network Analysis
+
+Yao Wen shared his current progress of the Network Analysis with the Team. He created
+the network graph, bar chart, and a boxplot. By looking at the network graph, it shows
+the corresponding revenue of the nodes in the bar chart and the summation in the
+boxplot. Jia Wen mentioned that it is similar to what Prof Kam suggested but does not
+display the average revenue of all the companies.
+
+The team also discussed on how we could create a better visualization by putting
+legends for Beneficial Owner, Company Contact, and adding color to differentiate the
+centrality. Yao Wen also shared another page that he have created which allows for an
+ID search. It displays the nth-degree and highlights certain variables. Jia Wen finds
+the page useful and suggested to keep it as a tab instead of hiding it inside the
+network analysis.
+
+## 1.3 Topic Modelling
+
+Jia Wen shared her current progress of the Topic Modelling with the Team. She tested
+the Latent Dirichlet Allocation (LDA) method for fitting a topic model as suggested by
+Prof Kam. She wanted to introduce interactivity through the number of topic groups.
+However, she faced issues with the delay reaction.
+
+The graph is able to run based on the specific numeric input by the user but it loads
+incrementally. E.g current value equals to 4 but when an user keys in 7, the graph
+loads from 4-5 then 5-6 before stopping at 7. She wanted to introduce a button to
+tackle the reaction issue. Despite so, her attempt is unsuccessful. Junseok mentioned
+that he is able to look into it and asked Jia Wen to publish her code into github for
+him to resolve the issue.
+
+# 2. Review on next agenda(s)
+
+Team Member, Yao Wen aims to complete his Github on Monday and update Junseok for
+stitching before working on the Project Website. Junseok is assisting Jia Wen's in the
+button before she is able to do the stats graph. In the meantime, she will work on
+revising the proposal and begin some part of the poster. The team aims to review the
+stitch version in our next meeting.
+
+# 3. End of Meeting
+
+The meeting ended at 1800. The next meeting would convene on Wednesday, 28th June 2023
+at 2000.
