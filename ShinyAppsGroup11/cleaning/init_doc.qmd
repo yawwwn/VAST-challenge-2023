@@ -9,11 +9,11 @@ pacman::p_load(jsonlite, tidygraph, tidyverse, ggraph, ggiraph, visNetwork, grap
 ```
 
 ```{r}
-mc3_data <- fromJSON("data/MC3.json")
+MC3_challenge <- fromJSON("data/MC3.json")
 ```
 
 ```{r}
-mc3_nodes <- as_tibble(mc3_data$nodes) %>%
+MC3_nodes <- as_tibble(MC3_challenge$nodes) %>%
   distinct() %>% # Remove duplicate rows
   mutate(country = as.character(country),             # Convert to character type
          id = as.character(id),                       # Convert to character type
@@ -31,7 +31,7 @@ mc3_nodes <- as_tibble(mc3_data$nodes) %>%
 #| fig-height: 3.5
 #| fig-width: 7
 #Extracting edges
-mc3_edges_raw <- as_tibble(mc3_data$links) %>% 
+MC3_edges_raw <- as_tibble(MC3_challenge$links) %>% 
   distinct() %>% # Remove duplicate rows
   mutate(source = as.character(source), # Convert to character type
          target = as.character(target), # Convert to character type
@@ -45,19 +45,19 @@ mc3_edges_raw <- as_tibble(mc3_data$links) %>%
 ```
 
 ```{r}
-mc3_nodes_group <- mc3_nodes %>% #given some companies/nodes have multiple rows in different countries
+MC3_nodes_group <- MC3_nodes %>% #given some companies/nodes have multiple rows in different countries
   group_by(id) %>%
   summarize(total_revenue_omu = sum(revenue_omu, na.rm = TRUE))
 
 #Extracting edges
-mc3_edges <- mc3_edges_raw %>% 
-  left_join(mc3_nodes_group, by = c("from" = "id")) %>% 
+MC3_edges <- MC3_edges_raw %>% 
+  left_join(MC3_nodes_group, by = c("from" = "id")) %>% 
   select(from, to, type, weights, total_revenue_omu) 
 
 ```
 
 ```{r}
-summary_data <- mc3_edges %>%
+summary_data <- MC3_edges %>%
   group_by(to) %>%
   rename(id = to) %>%
   summarize(total_revenue_omu = sum(total_revenue_omu, na.rm = TRUE),
@@ -72,17 +72,17 @@ summary_data <- mc3_edges %>%
 #| fig-height: 3.5
 #| fig-width: 7
 
-id1 <- mc3_edges %>% # extract the source column from the edges dataframe and rename it to id1
+id1 <- MC3_edges %>% # extract the source column from the edges dataframe and rename it to id1
   select(from) %>%
   rename(id = from)
 
-id2 <- mc3_edges %>% # extract the target column from the edges dataframe and rename it to id2
+id2 <- MC3_edges %>% # extract the target column from the edges dataframe and rename it to id2
   select(to) %>%
   rename(id = to)
 
-mc3_nodes1 <- rbind(id1, id2) %>% # combine the id1 and id2 dataframes 
+MC3_nodes_master <- rbind(id1, id2) %>% # combine the id1 and id2 dataframes 
   distinct() %>% # remove the duplicates
-  left_join(mc3_nodes, by = "id",
+  left_join(MC3_nodes, by = "id",
             unmatched = "drop") %>%
   left_join(summary_data, by = "id") %>%
   replace_na(list(companies_owned = 0, companies_contact = 0, total_relation = 0))%>% #replace NA values with 0
@@ -96,8 +96,8 @@ mc3_nodes1 <- rbind(id1, id2) %>% # combine the id1 and id2 dataframes
 #| fig-height: 3.5
 #| fig-width: 7
 # create a graph from the nodes and edges dataframes
-mc3_graph <- tbl_graph(nodes = mc3_nodes1,
-                       edges = mc3_edges,
+MC3_graph <- tbl_graph(nodes = MC3_nodes_master,
+                       edges = MC3_edges,
                        directed = FALSE) %>%
   mutate(betweenness_centrality = centrality_betweenness(), #additional node attribute
          closeness_centrality = ifelse(is.nan(centrality_closeness()),0,centrality_closeness()), #additional node attribute
@@ -110,13 +110,13 @@ mc3_graph <- tbl_graph(nodes = mc3_nodes1,
 #| code-fold: false
 #| fig-height: 3.5
 #| fig-width: 7
-nodes_df <- mc3_graph %>%
+nodes_df <- MC3_graph %>%
   activate(nodes) %>%
   as_tibble() %>%
   rename(name = id) %>%
   mutate(id=row_number())
 
-edges_df <- mc3_graph %>%
+edges_df <- MC3_graph %>%
   activate(edges) %>%
   as_tibble()
 ```
@@ -144,11 +144,11 @@ edges_df2 <- edges_df %>%
 ### 0. Export in CSV
 
 ```{r}
-write.csv(mc3_nodes1, file = "data/mc3_nodes1.csv")
+write.csv(MC3_nodes_master, file = "data/MC3_nodes_master.csv")
 ```
 
 ```{r}
-write.csv(mc3_nodes1, file = "data/mc3_nodes2.csv")
+write.csv(MC3_nodes_master, file = "data/MC3_nodes2.csv")
 ```
 
 ### 1.1 Distribution of Count per Top 3 countries Panel Tab 1
@@ -157,7 +157,7 @@ export
 
 ```{r}
 
-mc3_nodes1_Other <- mc3_nodes1 %>%
+MC3_nodes_master_Other <- MC3_nodes_master %>%
   filter(!is.na(country)) %>%
   group_by(country) %>%
   summarise(counts = n()) %>%
@@ -172,7 +172,7 @@ mc3_nodes1_Other <- mc3_nodes1 %>%
 ```
 
 ```{r}
-mc3_nodes1_Other %>%
+MC3_nodes_master_Other %>%
   arrange(desc(counts)) %>%
   ggplot(aes(x = reorder(country, -counts), y = counts)) +
   geom_bar(stat = "identity", fill = '#3498db') +
@@ -189,7 +189,7 @@ mc3_nodes1_Other %>%
 ### 1.2 Distribution of Revenue per Top 3 countries Paenl tab 2
 
 ```{r}
-mc3_nodes1 %>%
+MC3_nodes_master %>%
   filter(!is.na(country)) %>%
   group_by(country) %>%
   summarise(revenue_omu = sum(revenue_omu)) %>%
@@ -211,7 +211,7 @@ mc3_nodes1 %>%
 ### 2 Distribution of Company located in multiple countries
 
 ```{r}
-  mc3_nodes1 %>%
+  MC3_nodes_master %>%
   group_by(id) %>%
   summarise(total_countries = n_distinct(country)) %>%
   filter(total_countries > 3) %>%
@@ -233,7 +233,7 @@ mc3_nodes1 %>%
 ### 3 Distribution of Individuals who own the most of amount of companies
 
 ```{r}
-  mc3_nodes1 %>%
+  MC3_nodes_master %>%
   group_by(id) %>%
   filter(total_relation > 8) %>%
   arrange(desc(total_relation)) %>%
@@ -254,7 +254,7 @@ mc3_nodes1 %>%
 
 ```{r}
 # Get number of type by source (Company)
-nodes_count <- mc3_nodes %>%
+nodes_count <- MC3_nodes %>%
   group_by(id, type) %>%
   summarise(count = n()) %>%
   ungroup()
@@ -292,7 +292,7 @@ nodes_count %>%
 
 ```{r}
 # Only feature data from Companies
-company_nodes <- mc3_nodes1 %>%
+company_nodes <- MC3_nodes_master %>%
   filter(type == "Company")
 
 company_rev <-
