@@ -67,20 +67,27 @@ vbs <- list(
     title = "Total Revenue (OMU)", 
     value = textOutput("total_revenue_omu"),
     showcase = bs_icon("cash-coin"),
-    p("Total revenue involved within network")
+    p("Total revenue of companies involved within network")
   ),
   value_box(
-    title = "Highest associated Topic", 
+    title = "Highest associated Topic#", 
     value = textOutput("topic"),
     showcase = bs_icon("water"),
-    p("Based on number of topics (K) = 4 "),
+    p("Based on number of topics (K) = 7"),
     theme_color = "info"
   ),
   value_box(
-    title = "Top Community", 
+    title = "Number of topics involved", 
+    value = textOutput("no_of_topic"),
+    showcase = bs_icon("box-seam-fill"),
+    p("Number of topics involved with the network (based on K=7)"),
+    theme_color = "info"
+  ),
+  value_box(
+    title = "Top Community Group", 
     value = textOutput("community"),
     showcase = bs_icon("people-fill"),
-    p("Top community within the network"),
+    p("Community Group with the most participants"),
     theme_color = "success"
   )
 )
@@ -136,7 +143,7 @@ server <- function(input, output, session) {
         selectedNodes$shape <- "icon"
         selectedNodes$icon.code <- ifelse(is.na(selectedNodes$new_type), "f1ad", "f007")
         selectedNodes$icon.color <- ifelse(is.na(selectedNodes$new_type),"#116A7B" ,"#FF2171")
-      } else if (colorOption == "View by Degree of relationship") {
+      } else if (colorOption == "View by Degree") {
         selectedNodes$group <- selectedNodes$degree
       }
 
@@ -214,16 +221,30 @@ server <- function(input, output, session) {
         selectedNodes <- nodes_df2_topic[nodes_df2_topic$id %in% connectedNodes$id, ]
         topic_counts <- table(selectedNodes$topic_clean)
         max_count_topic <- names(topic_counts)[which.max(topic_counts)]
-      
         
         if (max_count_topic == "unknown" && length(topic_counts) > 1) {
           second_max_count_topic <- names(topic_counts[order(topic_counts, decreasing = TRUE)])[2]
           max_count_topic <- ifelse(is.na(second_max_count_topic), max_count_topic, second_max_count_topic)
-      }
-    }
+          }
+        }
       })
-    
   }
+  {
+    output$no_of_topic <- renderText({
+      selectedNode <- nodes_df2_topic[nodes_df2_topic$name == input$searchNode, ]
+      degree <- input$degree
+      
+      if (!is.null(selectedNode)) {
+        connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+        selectedNodes <- nodes_df2_topic[nodes_df2_topic$id %in% connectedNodes$id, ]
+        distinct_count <- selectedNodes %>% 
+          filter(topic != "unknown")%>%
+          distinct(topic) %>% 
+          n_distinct()
+      }
+    })
+  }
+  
   {
     output$community <- renderText({
       selectedNode <- nodes_df2[nodes_df2$name == input$searchNode, ]
@@ -236,18 +257,10 @@ server <- function(input, output, session) {
         max_community_counts <- names(community_counts)[which.max(community_counts)]
       }
     })
-    
   }
   
-  output$variableData <- renderPrint({
-    selectedNode <- nodes_df2[nodes_df2$name == input$searchNode, ]
-    degree <- input$degree
-    connectedNodeIds <- getConnectedNodes(selectedNode$id, degree)
-    #selectedNodes <- nodes_df2[nodes_df2$id %in% connectedNodeIds$nodeId, ]
-    #selectedNodes <- merge(connectedNodeIds, nodes_df2, by.x = "nodeId", by.y = "id", all.x = TRUE)
-    #variable <- your_variable  # Replace 'your_variable' with the actual variable name
-    connectedNodeIds  # Return the variable
-  })
+
+
   
   
   

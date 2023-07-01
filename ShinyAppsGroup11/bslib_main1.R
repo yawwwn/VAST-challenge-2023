@@ -1,19 +1,14 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
 
-library(conflicted)
-library(ggplot2)
-library(tidyverse)
-library(dplyr)
-library(shiny)
-library(bslib)
-library(visNetwork)
-library(shinyWidgets)
-library(scales)
-library(plotly)
-conflicts_prefer(plotly::layout)
-library(heatmaply)
-library(readr)
-library(ggiraph)
-library(igraph)
+pacman::p_load(shiny, bslib, scales, plotly, heatmaply, readr, jsonlite, tidygraph, tidyverse, ggraph, ggiraph, visNetwork, graphlayouts, ggforce, tidytext, skimr, treemap, ggdist, wordcloud, RColorBrewer, tm, udpipe, lattice, stringr, wordcloud2)
+
 
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
@@ -96,7 +91,8 @@ ui <- page_sidebar(
                 selected = "All"),
     radioButtons("colorOption", "Visualise nodes by:",
                  choices = c("View by Community", "View by Type"),
-                 selected = "View by Community")
+                 selected = "View by Community"),
+    checkboxInput("CountryToggle", "Enable Graph Select by Country", value = FALSE)
   ),
   navset_tab(
     id = "myNavset",
@@ -170,7 +166,7 @@ server <- function(input, output, session) {
 
 
     
-    visNetwork(
+    vis <- visNetwork(
       nodes = selectedNodes,
       edges = selectedEdges
     ) %>%
@@ -179,11 +175,6 @@ server <- function(input, output, session) {
       visNodes(
         borderWidth = 1,
         shadow = TRUE,
-      ) %>%
-      visOptions(
-        highlightNearest = TRUE,
-        nodesIdSelection = TRUE,
-        selectedBy = "community"
       ) %>%
       visInteraction(dragNodes = TRUE, 
                      dragView = TRUE, 
@@ -200,6 +191,24 @@ server <- function(input, output, session) {
         ncol = 3,
         width = 0.1
       ) 
+    
+    if (input$CountryToggle) {
+      vis <- vis %>%
+        visOptions(
+        highlightNearest = TRUE,
+        nodesIdSelection = TRUE,
+        selectedBy = "country")
+    } else {
+      vis <- vis %>%
+        visOptions(
+          highlightNearest = TRUE,
+          nodesIdSelection = TRUE,
+          selectedBy = "community")
+      vis
+    }
+    
+
+    
   })
    
   output$barPlot_owner_rev <- renderPlotly({
@@ -219,17 +228,22 @@ server <- function(input, output, session) {
     # Get the top N nodes
     topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
     # Create a new column with reordered names
-    topNodes$Name <- reorder(topNodes$name, -topNodes$total_revenue_omu)
+    #topNodes$Name <- reorder(topNodes$name, -topNodes$total_revenue_omu)
     
     
     # Create bar plot
-    p <- ggplot(topNodes, aes(x = Name
+    p <- ggplot(topNodes, aes(x = name
                               , y = total_revenue_omu)) +
       geom_col_interactive(aes(tooltip = name)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(x = NULL, y = NULL) +
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5)) +
+      xlab("Owners & Contacts") +  # Add x-axis title
+      ylab("Total Revenue (OMU)") +  # Add y-axis title
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank()) +
       scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
     
     ggplotly(p)
@@ -277,8 +291,8 @@ server <- function(input, output, session) {
               dendrogram = "none", #remove cluster
               colors = Blues,
               margins = c(NA,200,60,NA),
-              fontsize_row = 8,
-              fontsize_col = 8,
+              fontsize_row = 6,
+              fontsize_col = 6,
               #main="Country Distribution for Top Owners",
               xlab = "Owners & Contacts",
               ylab = "Countries involved",
@@ -371,7 +385,9 @@ server <- function(input, output, session) {
       xlab("Communities") +  # Add x-axis title
       ylab("Total Number of Companies within") +  # Add y-axis title
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5)) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+              panel.grid.major.x = element_blank(),
+              panel.grid.minor.x = element_blank()) +
       scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
     
     ggplotly(p)
@@ -415,7 +431,7 @@ server <- function(input, output, session) {
       edges_df2$from %in% connectedNodeIds & edges_df2$to %in% connectedNodeIds,
     ]
     
-    visNetwork(
+    vis <- visNetwork(
       nodes = selectedNodes,
       edges = selectedEdges
     ) %>%
@@ -424,11 +440,6 @@ server <- function(input, output, session) {
       visNodes(
         borderWidth = 1,
         shadow = TRUE,
-      ) %>%
-      visOptions(
-        highlightNearest = TRUE,
-        nodesIdSelection = TRUE,
-        selectedBy = "community"
       ) %>%
       visInteraction(dragNodes = TRUE, 
                      dragView = TRUE, 
@@ -444,7 +455,21 @@ server <- function(input, output, session) {
         ),
         ncol = 3,
         width = 0.1
-      ) 
+      )
+    if (input$CountryToggle) {
+      vis <- vis %>%
+        visOptions(
+          highlightNearest = TRUE,
+          nodesIdSelection = TRUE,
+          selectedBy = "country")
+    } else {
+      vis <- vis %>%
+        visOptions(
+          highlightNearest = TRUE,
+          nodesIdSelection = TRUE,
+          selectedBy = "community")
+      vis
+    }
   })
   
   output$barPlot_company <- renderPlotly({
@@ -472,9 +497,12 @@ server <- function(input, output, session) {
                               , y = revenue_omu)) +
       geom_col_interactive(aes(tooltip = name)) +
       geom_bar(stat = "identity", fill = "steelblue") +
-      labs(x = NULL, y = NULL) +
+      xlab("Companies") +  # Add x-axis title
+      ylab("Total Revenue (OMU)") +  # Add y-axis title
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5)) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank()) +
       scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
     
     ggplotly(p)
@@ -563,9 +591,12 @@ server <- function(input, output, session) {
                               , y = count)) +
       geom_col_interactive(aes(tooltip = count)) +
       geom_bar(stat = "identity", fill = "steelblue") +
-      labs(x = NULL, y = NULL) +
+      xlab("Countries") +  # Add x-axis title
+      ylab("Number of Companies") +  # Add y-axis title
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5)) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank()) +
       scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
     
     ggplotly(p)
