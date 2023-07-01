@@ -116,10 +116,13 @@ value_box_1_3 <- value_box(
 cards3 <- list(
 
 card(full_screen = TRUE, card_header("Select Size of Word Cloud"),
-     card_body(numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
-               actionButton("run_button1", "Generate"),
-               wordcloud2Output('wordcloud2')
-     )),
+     layout_sidebar(
+       fillable = TRUE,
+       sidebar = sidebar(
+            numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
+            actionButton("run_button1", "Generate"),
+            ), card_body(wordcloud2Output('wordcloud2')
+     ))),
 
 card(full_screen = TRUE, card_header("Select Number of Topic Group"),
      layout_sidebar(
@@ -128,7 +131,8 @@ card(full_screen = TRUE, card_header("Select Number of Topic Group"),
          numericInput("topic_group", "Number of Topic Group", value = 6, min = 2, max = 20, step = 1),
          actionButton("run_button", "Generate")
        ), card_body(plotlyOutput("myplot"))))
-)
+  )
+
 
 
 # Define the UI ===================================================>
@@ -163,15 +167,21 @@ ui <- navbarPage(
   # Third panel tab
   tabPanel(
     "Topic Analysis",
-    layout_columns(
-      fill = FALSE,
-      col_width = c(12, 12),
-      row_heights = c(1.5, 1.5),
-      cards3[[1]],
-      cards3[[2]]
+    navset_tab(
+      id = "myNavset",
+      nav_panel(title = "Wordcloud",
+                layout_columns(
+                  cards3[[1]]
+        )),
+      nav_panel(title = "Select the Number of Topics",
+                  layout_columns(
+                   cards3[[2]]
+               )
+              )
+           )
     )
   )
-)
+
 
 
 # Define the server code =======================================>

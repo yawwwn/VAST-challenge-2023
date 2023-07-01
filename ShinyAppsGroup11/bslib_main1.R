@@ -15,7 +15,6 @@ library(readr)
 library(ggiraph)
 library(igraph)
 
-
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
 edges_df2 <- read_rds("data/edges_df2.rds")
@@ -26,53 +25,59 @@ options(scipen = 999) #disables scientific notation
 cards <- list(
   card(
     full_screen = TRUE,
-    card_header("Network Graph of Top Company Ownership and Contacts", height = "500px"),
-    visNetworkOutput("networkPlot")
+    card_header("Network Graph of Top Company Ownership and Contacts"),
+    visNetworkOutput("networkPlot_owner")
   ),
   card(
     full_screen = TRUE,
     card_header("Total Revenue from respective companies owned by Top Owners"),
-    plotlyOutput("barPlot")
+    plotlyOutput("barPlot_owner_rev")
   ),
   card(
     full_screen = TRUE,
     card_header("Revenue Comparison of Top Owners"),
-    plotlyOutput("boxPlot1")
+    plotlyOutput("boxPlot_top_owner")
   ),
   card(
     full_screen = TRUE,
     card_header("Revenue Comparison of ALL Owners"),
-    plotlyOutput("boxPlot2")
+    plotlyOutput("boxPlot_all_owner")
   ),
   card(
     full_screen = TRUE,
     card_header("Country Distribution of companies owned"),
-    plotlyOutput("heatmap")
+    plotlyOutput("heatmap_owner")
   ),
   card(
     full_screen = TRUE,
     card_header("Network Graph of Top Companies and their owners"),
-    visNetworkOutput("networkPlot2")  
+    visNetworkOutput("networkPlot_company")  
   ),  card(
     full_screen = TRUE,
     card_header("Total Revenue from Top Companies"),
-    plotlyOutput("barPlot1")
+    plotlyOutput("barPlot_company")
   ),
   card(
     full_screen = TRUE,
     card_header("Revenue Comparison of Top Companies"),
-    plotlyOutput("boxPlot3")
+    plotlyOutput("boxPlot_top_co")
   ),
   card(
     full_screen = TRUE,
     card_header("Revenue Comparison of ALL Companies"),
-    plotlyOutput("boxPlot4")
+    plotlyOutput("boxPlot_all_co")
   ),
   card(
     full_screen = TRUE,
     card_header("Country Distribution of Top Companies"),
-    plotlyOutput("barPlot3")
+    plotlyOutput("barPlot_co_country")
+  ),
+  card(
+    full_screen = TRUE,
+    card_header("Total of number of companies in the related Communities involved"),
+    plotlyOutput("barPlot_community")
   )
+  
 )
 
 # UI
@@ -87,7 +92,7 @@ ui <- page_sidebar(
     tags$hr(),  # Add a horizontal line as a divider
     p(style = "font-family: Arial; font-style: italic; font-size: 18px;", "Additional Filters"),
     selectInput("nodeType", "Filter by Type:",
-                choices = c("All", "Beneficial Owner + Company Contact", "Beneficial Owner", "Company Contact"),
+                choices = c("All", "Beneficial Owner + Company Contact", "Beneficial Owner", "Company Contact", "Company"),
                 selected = "All"),
     radioButtons("colorOption", "Visualise nodes by:",
                  choices = c("View by Community", "View by Type"),
@@ -105,7 +110,7 @@ ui <- page_sidebar(
                 cards[[2]], cards[[5]]
               ),
               layout_columns(
-                cards[[3]], cards[[4]]
+                cards[[3]], cards[[4]], cards[[11]]
               )
     ),
     nav_panel(title = "Companies",
@@ -127,7 +132,7 @@ ui <- page_sidebar(
 
 
 server <- function(input, output, session) {
-  output$networkPlot <- renderVisNetwork({
+  output$networkPlot_owner <- renderVisNetwork({
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -162,8 +167,8 @@ server <- function(input, output, session) {
     selectedEdges <- edges_df2[
       edges_df2$from %in% connectedNodeIds & edges_df2$to %in% connectedNodeIds,
     ]
-    
-    
+
+
     
     visNetwork(
       nodes = selectedNodes,
@@ -177,8 +182,8 @@ server <- function(input, output, session) {
       ) %>%
       visOptions(
         highlightNearest = TRUE,
-        nodesIdSelection = TRUE#,
-        #selectedBy = "new_type", 
+        nodesIdSelection = TRUE,
+        selectedBy = "community"
       ) %>%
       visInteraction(dragNodes = TRUE, 
                      dragView = TRUE, 
@@ -191,11 +196,13 @@ server <- function(input, output, session) {
           color = c("#9BABB8", "#3E7C59"),
           stringsAsFactors = FALSE,
           font.align = "top"
-        )
-      )
+        ),
+        ncol = 3,
+        width = 0.1
+      ) 
   })
-  
-  output$barPlot <- renderPlotly({
+   
+  output$barPlot_owner_rev <- renderPlotly({
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -229,7 +236,7 @@ server <- function(input, output, session) {
   })
   
   #heatmap
-  output$heatmap <- renderPlotly({
+  output$heatmap_owner <- renderPlotly({
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -280,7 +287,7 @@ server <- function(input, output, session) {
   )
   
   
-  output$boxPlot1 <- renderPlotly({
+  output$boxPlot_top_owner <- renderPlotly({
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -305,7 +312,7 @@ server <- function(input, output, session) {
              showlegend = FALSE)
   })
   
-  output$boxPlot2 <- renderPlotly({
+  output$boxPlot_all_owner <- renderPlotly({
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -330,8 +337,48 @@ server <- function(input, output, session) {
              showlegend = FALSE)
   })
   
+  output$barPlot_community <- renderPlotly({
+    filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
+    centralityMeasure <- input$centrality
+    topN <- input$topN
+    nodeType <- input$nodeType
+    
+    # Filter nodes based on centrality measure
+    filteredNodes <- filteredNodes[order(-filteredNodes[[centralityMeasure]]), ]
+    
+    # Filter nodes based on type
+    if (nodeType != "All") {
+      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
+    }
+    
+    # Get the top N nodes
+    topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
+    topNodesAll<- nodes_df2[nodes_df2$community %in% topNodes$community,]
+    
+    topNodes_community<- topNodesAll %>% #new datatable
+      group_by(community) %>%
+      summarize(count = n()) %>%
+      ungroup()
+    # Create a new column with reordered names
+    topNodes_community$community <- reorder(topNodes_community$community, -topNodes_community$count)
+    
+    # Create bar plot
+    p <- ggplot(topNodes_community, aes(x = community
+                              , y = count)) +
+      geom_col_interactive(aes(tooltip = community)) +
+      geom_bar(stat = "identity", fill = "steelblue") +
+      labs(x = NULL, y = NULL) +
+      xlab("Communities") +  # Add x-axis title
+      ylab("Total Number of Companies within") +  # Add y-axis title
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5)) +
+      scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
+    
+    ggplotly(p)
+  })
   
-  output$networkPlot2 <- renderVisNetwork({
+  
+  output$networkPlot_company <- renderVisNetwork({
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -343,8 +390,9 @@ server <- function(input, output, session) {
     
     # Filter nodes based on type
     if (nodeType != "All") {
-      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
-    }
+      filteredNodes <- filteredNodes[filteredNodes$type == nodeType &
+                                       !is.na(filteredNodes$type), ]
+      }
     
     # Add color and shape properties based on the selected option
     if (colorOption == "View by Community") {
@@ -379,7 +427,8 @@ server <- function(input, output, session) {
       ) %>%
       visOptions(
         highlightNearest = TRUE,
-        nodesIdSelection = TRUE#,
+        nodesIdSelection = TRUE,
+        selectedBy = "community"
       ) %>%
       visInteraction(dragNodes = TRUE, 
                      dragView = TRUE, 
@@ -392,11 +441,13 @@ server <- function(input, output, session) {
           color = c("#9BABB8", "#3E7C59"),
           stringsAsFactors = FALSE,
           font.align = "top"
-        )
-      )
+        ),
+        ncol = 3,
+        width = 0.1
+      ) 
   })
   
-  output$barPlot1 <- renderPlotly({
+  output$barPlot_company <- renderPlotly({
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -407,8 +458,8 @@ server <- function(input, output, session) {
     
     # Filter nodes based on type
     if (nodeType != "All") {
-      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
-    }
+      filteredNodes <- filteredNodes[filteredNodes$type == nodeType &
+                                       !is.na(filteredNodes$type), ]    }
     
     # Get the top N nodes
     topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
@@ -429,7 +480,7 @@ server <- function(input, output, session) {
     ggplotly(p)
   })
   
-  output$boxPlot3 <- renderPlotly({
+  output$boxPlot_top_co <- renderPlotly({
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -440,8 +491,8 @@ server <- function(input, output, session) {
     
     # Filter nodes based on type
     if (nodeType != "All") {
-      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
-    }
+      filteredNodes <- filteredNodes[filteredNodes$type == nodeType &
+                                       !is.na(filteredNodes$type), ]    }
     
     # Get the top N nodes
     topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
@@ -454,7 +505,7 @@ server <- function(input, output, session) {
              showlegend = FALSE)
   })
   
-  output$boxPlot4 <- renderPlotly({
+  output$boxPlot_all_co <- renderPlotly({
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -465,8 +516,9 @@ server <- function(input, output, session) {
     
     # Filter nodes based on type
     if (nodeType != "All") {
-      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
-    }
+      filteredNodes <- filteredNodes[filteredNodes$type == nodeType &
+                                       !is.na(filteredNodes$type), ]
+      }
     
     # Get the top N nodes
     topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
@@ -479,7 +531,7 @@ server <- function(input, output, session) {
              showlegend = FALSE)
   })
   
-  output$barPlot3 <- renderPlotly({
+  output$barPlot_co_country <- renderPlotly({
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -490,12 +542,13 @@ server <- function(input, output, session) {
     
     # Filter nodes based on type
     if (nodeType != "All") {
-      filteredNodes <- filteredNodes[filteredNodes$new_type == nodeType, ]
-    }
+      filteredNodes <- filteredNodes[filteredNodes$type == nodeType &
+                                       !is.na(filteredNodes$type), ]
+      }
     
     # Get the top N nodes
     topNodes <- filteredNodes[1:min(topN, nrow(filteredNodes)), ]
-    
+
     topNodes_country <- topNodes %>% #new datatable
       group_by(country) %>%
       summarize(count = n()) %>%
@@ -507,7 +560,7 @@ server <- function(input, output, session) {
     
     # Create bar plot
     p <- ggplot(topNodes_country, aes(x = Country
-                                      , y = count)) +
+                              , y = count)) +
       geom_col_interactive(aes(tooltip = count)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(x = NULL, y = NULL) +
@@ -517,7 +570,7 @@ server <- function(input, output, session) {
     
     ggplotly(p)
   })
-  
+
 }
 
 # Run the app
