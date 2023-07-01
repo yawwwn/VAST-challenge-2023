@@ -5,10 +5,10 @@ account: junsok21
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9327112
-bundleId: 7406125
+bundleId: 7408791
 url: https://junsok21.shinyapps.io/ShinyAppsGroup11/
-when: 1688131128.01161
-lastSyncTime: 1688131128.01162
+when: 1688195150.55153
+lastSyncTime: 1688195150.55154
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: data/MC3.json|data/MC3_text.csv|cleaning
+ignoredFiles: app_yaowen.R|cleaning

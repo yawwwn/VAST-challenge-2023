@@ -18,6 +18,7 @@ library(bulletr)
 library(ggthemes)
 library(gtExtras)
 library(ggiraph)
+library(hrbrthemes)
 ```
 
 ```{r}
@@ -123,8 +124,8 @@ MC3_nodes_Other <- MC3_nodes_master %>%
     )                                        
   )    
 ```
-## Revenue plot
 
+## Revenue plot
 
 ```{r}
 write.csv(MC3_nodes_master, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup11/cleaning/data/MC3_nodes_master.csv")
@@ -176,6 +177,10 @@ write.csv(MC3_nodes_master, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup1
   
 ```
 
+```{r}
+write.csv(MC3_nodes_master_revenue, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup11/cleaning/data/MC3_nodes_master_revenue.csv")
+```
+
 ## Company Plot
 
 ```{r}
@@ -222,12 +227,7 @@ datatable(wide_dt)
 
 ```
 
-
-
-
-
 ## Ownership Plot
-
 
 ```{r}
 
@@ -262,11 +262,9 @@ summary_data %>%
 write.csv(summary_data, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup11/cleaning/data/summary_data.csv")
 ```
 
-
 ```{r}
 datatable(summary_data, filter = 'top', options = list(order = list(list(3, 'desc'))))
 ```
-
 
 ## tokenisation
 
@@ -338,7 +336,6 @@ stopwords_removed %>%
 write.csv(stopwords_removed, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup11/cleaning/data/stopwords_removed.csv")
 ```
 
-
 ```{r}
 # using as.matrix()
 MC3_text <- stopwords_removed %>%
@@ -358,12 +355,9 @@ result <- ldatuning::FindTopicsNumber(
 
 ```
 
-
 ```{r}
 FindTopicsNumber_plot(result)
 ```
-
-
 
 ```{r}
 # number of topics
@@ -406,7 +400,6 @@ library(knitr)
 library(hrbrthemes)
 ```
 
-
 ```{r}
 library(RColorBrewer)
 library(ggiraph)
@@ -416,8 +409,6 @@ stopwords_removed_join <- stopwords_removed %>%
   left_join(word_probs, by = c("word" = "term2"), unmatched= "drop") %>%
   na.omit()
 ```
-
-
 
 ```{r}
 #select and aggregate
@@ -465,11 +456,9 @@ girafe(
 )
 ```
 
-
 ```{r}
 write.csv(stopwords_removed_join, file = "C:/junsok21/VAST2023_Group11/ShinyAppsGroup11/cleaning/data/stopwords_removed_join.csv")
 ```
-
 
 ```{r}
 dataforbullet <- stopwords_removed_join %>%
@@ -500,8 +489,3 @@ dataforbullet %>%
 
 
 ```
-
-
-
-
-
