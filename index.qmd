@@ -110,8 +110,8 @@ search: false
               A visual analytics approach to expose <strong class="bold-text">illegal, </br> unreported, and unregulated</strong> (IUU) fishing
             </div>
           </div>
-          <a href="/about" class="button cc-jumbo-button cc-jumbo-white w-inline-block">
-            <div class="text-block">Explore More</div>
+          <a href="https://junsok21.shinyapps.io/ShinyAppsGroup11/" class="button cc-jumbo-button cc-jumbo-white w-inline-block">
+            <div class="text-block">Open our App Now</div>
           </a>
         </div>
       </div>
