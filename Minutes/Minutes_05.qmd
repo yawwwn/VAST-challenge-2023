@@ -1,0 +1,120 @@
+---
+title: "Project Meeting 05"
+description: "Saturday, 1st July 2023 from 1730 to 1830 <br> Microsoft Teams Meeting<br>"
+author:
+  - name: Thng Yao Wen
+    #url: 
+date: '2023-07-02'
+format: html
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 87
+---
+
+# Agenda(s)
+
++--------------------------------------------+
+| 1.  Update on deployment issues            |
++--------------------------------------------+
+| 2.  Discussion on Shiny Application        |
+|     1.  Dashboard                          |
+|     2.  Network Analysis                   |
+|     3.  Topic Modelling                    |
++--------------------------------------------+
+| 3.  Discussion on Poster                   |
++--------------------------------------------+
+| 4.  Review on next Agenda                  |
++--------------------------------------------+
+
+# 1. Update on deployment issues
+
+Due to deployment issues, the meeting have been postponed from Wednesday, 28th June to
+Saturday, 1st July 2023. Team member, Junseok had a consultation with Prof Kam on
+Friday, 30th June to debug the deployment issues with regards to the Shiny Application.
+
+He mentioned that the issue have since been resolved as Prof Kam mentioned that the LDA
+tuning might be causing the issue with deployment and would be good to comment it out
+and refer to it offline. Junseok also mentioned that Prof Kam walked him through the
+eventReactive function and it should not be followed by multiple reactive functions
+right after and shared the [useful
+link](https://debruine.github.io/shinyintro/reactives.html) that he received which is
+available on the course website, under Shiny.
+
+Also, Junseok shared that ideally we should have 2 sub menu to keep one analysis on one
+screen to avoid screen clutters. Based on the result from various method, the team
+agreed that the optimal number for topic groups will be fix at 7.
+
+# 2. Discussion on Shiny Application
+
+Prior to the meeting, Team member, Yao Wen have shared with Team member, Junseok his
+working file. He mentioned that saving the outputs as rds is an effective approach and
+it does not keep too many code inside shiny. Team member, Junseok shared that he have
+stitched the working file and it is currently working well. Thereafter, the team
+proceeds to review the shiny application.
+
+## 2.1 Dashboard
+
+Junseok shared his revised layout for the dashboard with the team. For standardization,
+he have since modified the insights to the center top of the page. Jia Wen mentioned
+that the word cloud should not appear in the topic modelling tab. Junseok asked if he
+should put it below the bullet graph but Jia Wen suggested to put it above the bullet
+graph as the word cloud give an overview of the product and services before looking at
+the topic groups.
+
+## 2.2 Network Analysis
+
+Yao Wen shared his revised Network Analysis with the Team, where he includes the
+heatmap. While looking at the heatmap and the total revenue from respective companies,
+Jia Wen suggested if we could align the Name of the owners/contact. Currently, the
+revenue are sorted from the highest to the lowest while the heatmap is in alphabetical
+order. She mentioned that it might not be ideal at first glance because Michael Bell
+have the highest revenue and thus, is placed 1st in the bar graph but 5th in the
+heatmap. Yao Wen said that he will look into it and see if it will be able to fix the
+sequence.
+
+He also showed the revenue comparison box plot that he have created, and the new search
+page. Jia Wen asked about the topic modelling of k=4 and Yao Wen mentioned that he used
+based on her fixed value and note that he have to revise it to 7.
+
+Jia Wen was confused about one of the insight in the search page as she thought it
+refers to the number of different topic group of the company noting that there maybe
+instances where 1 company have business in multiple categories. Yao Wen shared that he
+refers it as top associated topic group.
+
+Jia Wen asked if it is ideal because she felt that to detect the anomalies, we could
+look at the perspective of business having multiple categories. Junseok weighs in as he
+felt that it is alright to keep the top topic group but would probably rename it as the
+most associated topic group. Yao Wen said that will do so and create another insights
+for the number of different topic group. The team also agreed not to create multiple
+tabs for the graphs as it will impact the results.
+
+## 2.3 Topic Modelling
+
+Jia Wen shared the link of her quarto document where she did the statistical graphs.
+She mentioned there is not much variables to use and we would only look at it from the
+revenue's perspective to do the anova test and the type for the chi-square test. Also,
+she did a visualization for the confidence interval and asked Junseok to assist in
+incorporating it into Shiny so that she could focus on the poster and the user guide.
+
+# 3. Discussion on Poster
+
+Jia Wen shared her progress on the poster and highlighted that she could only continue
+after the revised input from our shiny application. She shared that she have completed
+some parts of the poster, such as introduction, data preparation and methodology and
+included the R packages that we have used into the poster.
+
+# 4. Review on next agenda(s)
+
+Team Member, Yao Wen aims to revise his working file by Sunday, 2nd July and update
+Junseok to re-stitching before working on the Project Website. Junseok will work on
+revising the shiny application. Jia Wen will continue with the poster and begin the
+user guide before sharing with team for further inputs.
+
+# 5. End of Meeting
+
+The meeting ended at 1830. If needed, the next meeting would convene on Monday, 3rd
+July 2023 at 2000.

@@ -17,14 +17,14 @@ editor_options:
 
 # Agenda(s)
 
-+--------------------------------------------------------------------------------------+
-| 1.  Discussion on Shiny Application                                                  |
-|     1.  Dashboard                                                                    |
-|     2.  Network Analysis                                                             |
-|     3.  Topic Modelling                                                              |
-+--------------------------------------------------------------------------------------+
-| 3.  Review on next Agenda                                                            |
-+--------------------------------------------------------------------------------------+
++-------------------------------------+
+| 1.  Discussion on Shiny Application |
+|     1.  Dashboard                   |
+|     2.  Network Analysis            |
+|     3.  Topic Modelling             |
++-------------------------------------+
+| 3.  Review on next Agenda           |
++-------------------------------------+
 
 # 1. Discussion on Shiny Application
 
