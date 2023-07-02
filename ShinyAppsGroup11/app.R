@@ -145,30 +145,49 @@ getConnectedNodes <- function(nodeId, degree) {
 
 cards1 <- list(
   card(
-    full_screen = FALSE,
+    full_screen = TRUE,
     card_header("Counts by Country"),
     plotOutput("company_plot")
   ),
   card(
-    full_screen = FALSE,
+    full_screen = TRUE,
     card_header("Company Data Table"),
     DT:: dataTableOutput("company_dt", width = "100%", height = "auto")
   ),
-  card(full_screen = FALSE, card_header("Select Size of Word Cloud"),
-       layout_sidebar(
-         fillable = TRUE,
-         sidebar = sidebar(
-           width = 100,
-           numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
-           actionButton("run_button1", "Go"),
-         ), card_body(wordcloud2Output('wordcloud2')
-         ))),
+  
   card(
     full_screen = TRUE,
-    card_header("Topics Average Revenue"),
-    gt_output("bullet_topics")
+    card_header("Word Cloud and Bullet Graph of Topic Revenue"),
+    card_body(
+      fluidRow(
+        column(width = 12, layout_sidebar(
+                   fillable = TRUE,
+                   sidebar = sidebar(
+                     width = 100,
+                     numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
+                     actionButton("run_button1", "Go"),
+                   ), wordcloud2Output("wordcloud2", height = "auto"))),
+        column(width = 12, gt_output("bullet_topics"))
+     )
+    )
   )
 )
+  
+#  card(full_screen = TRUE, card_header("Select Size of Word Cloud"),
+#       layout_sidebar(
+#         fillable = TRUE,
+#         sidebar = sidebar(
+#           width = 100,
+#           numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
+#           actionButton("run_button1", "Go"),
+#         ), card_body(wordcloud2Output('wordcloud2')
+#         ))),
+#  card(
+#    full_screen = TRUE,
+#    card_header("Topics Average Revenue"),
+#    gt_output("bullet_topics")
+  
+
 
 
 
@@ -257,6 +276,7 @@ cards2 <- list(
 cards3 <- list(
   card(full_screen = TRUE, card_header("Select Number of Topic Group"),
      layout_sidebar(
+       width = 215,
        fillable = TRUE,
        sidebar = sidebar(
          numericInput("topic_group", "Number of Topic Group", value = 6, min = 2, max = 20, step = 1),
@@ -265,12 +285,12 @@ cards3 <- list(
      )
     ),
   card(
-    full_screen = FALSE,
+    full_screen = TRUE,
     card_header("ANOVA Test"),
     plotOutput("statplot1")
   ),
   card(
-    full_screen = FALSE,
+    full_screen = TRUE,
     card_header("Confidence Interval"),
     plotOutput("statplot2")
   )
@@ -291,35 +311,38 @@ cards4 <- list(
 # Value Box Set for the 4th panel here -------------------------------->
 
 
-vbs4 <- list(
+value_box_4_1 <-
   value_box(
     title = "Total Revenue (OMU)", 
     value = textOutput("total_revenue_omu"),
     showcase = bs_icon("cash-coin"),
     p("Total revenue of companies involved within network")
-  ),
-  value_box(
-    title = "Highest associated Topic#", 
+  )
+
+value_box_4_2 <-  value_box(
+    title = "Highest Associated Topic#", 
     value = textOutput("topic"),
     showcase = bs_icon("water"),
-    p("Based on number of topics (K) = 7"),
+    p("Based on number of topics K=7"),
     theme_color = "info"
-  ),
-  value_box(
-    title = "Number of topics involved", 
+  )
+
+value_box_4_3 <-  value_box(
+    title = "Number of Topics Involved", 
     value = textOutput("no_of_topic"),
     showcase = bs_icon("box-seam-fill"),
     p("Number of topics involved with the network (based on K=7)"),
     theme_color = "info"
-  ),
-  value_box(
+  )
+
+value_box_4_4 <-  value_box(
     title = "Top Community Group", 
     value = textOutput("community"),
     showcase = bs_icon("people-fill"),
     p("Community Group with the most participants"),
     theme_color = "success"
   )
-)
+
 
 
 # Define the UI ===================================================>
@@ -334,8 +357,8 @@ ui <- navbarPage(
     "Dashboard",
     layout_columns(
       fill = FALSE,
-      col_widths = c(4, 4, 4, 3, 3, 3, 3),
-      value_box_1_1, value_box_1_2, value_box_1_3, cards1[[1]], cards1[[2]], cards1[[3]], cards1[[4]])
+      col_widths = c(4, 4, 4, 4, 4, 4),
+      value_box_1_1, value_box_1_2, value_box_1_3, cards1[[1]], cards1[[2]], cards1[[3]])
     ),
   
   #UI Second Panel #2 begin --------------------------------------------->
@@ -428,13 +451,16 @@ ui <- navbarPage(
       checkboxInput("layoutToggle", "Hierarchical Layout", value = FALSE),
       checkboxInput("physicsToggle", "Enable Physics", value = FALSE)
     ),
-    layout_column_wrap(
-      width = "250px",
-      fill = FALSE,
-      !!!vbs4
+    layout_columns(
+    fill = FALSE,
+    col_widths = c(3,3,3,3,12),
+    value_box_4_1, value_box_4_2, value_box_4_3, value_box_4_4, cards4[[1]])
+ #   layout_column_wrap(
+#      width = "250px",
+#     fill = FALSE,
+#      !!!vbs4
     ),
-    !!!cards4
-    )
+ #   !!!cards4
   )
 )
   
@@ -1011,7 +1037,7 @@ server <- function(input, output) {
                   na.omit(),
                    x= topic, y= revenue_omu, type ="np",
                    xlab= "Topic Group", ylab = "Revenue($)",
-                   title = "Comparison of Revenue across Topic Group",
+                   title = "Comparison of Revenue across Topic Group. Since p < 0.05, reject the null hypothesis that revenue across Topic Groups are similar",
                    pairwise.comparisons = TRUE, pairwise.display ="ns", conf.level = 0.95
     ) +
       scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
