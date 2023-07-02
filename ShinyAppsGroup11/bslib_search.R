@@ -15,12 +15,20 @@ library(scales)
 library(plotly)
 library(bsicons)
 library(readr)
+library(tidyverse)
+
 
 
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
 edges_df2 <- read_rds("data/edges_df2.rds")
-nodes_df2_topic <- read_rds("data/nodes_df2_topic.rds")
+company_bytopic <- read_rds("data/company_bytopic.rds")
+
+nodes_df2_topic <- nodes_df2 %>%
+  left_join(company_bytopic, by = c("name" = "id"), unmatched= "drop", relationship = "many-to-many")%>%
+  mutate(topic_clean = ifelse(is.na(topic),"unknown",topic)) %>%
+  select(-type.y)%>%
+  rename(type = type.x)
 
 # Function to get connected nodes up to a specified degree
 getConnectedNodes <- function(nodeId, degree) {
@@ -98,6 +106,7 @@ ui <- page_sidebar(
     pickerInput(
         inputId = "searchNode",
         label = "Search Names:",
+        selected = "John Smith",
         choices = sort(nodes_df2$name),
         options = list(`live-search` = TRUE),
         multiple = FALSE
@@ -258,13 +267,7 @@ server <- function(input, output, session) {
       }
     })
   }
-  
 
-
-  
-  
-  
-  
 }
 
 # Run the app

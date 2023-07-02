@@ -27,10 +27,12 @@ library(lobstr)
 library(ggstatsplot)
 library(ggdist)
 library(PMCMRplus)
-
-print(mem_used())
+library(shinyWidgets)
+library(bsicons)
 #-------------------------------------------> Must have packages
 
+
+print(mem_used())
 options(scipen = 999) #disables scientific notation
 
 
@@ -42,6 +44,7 @@ MC3_nodes_master_revenue <- read.csv("data/MC3_nodes_master_revenue.csv")
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
 edges_df2 <- read_rds("data/edges_df2.rds")
+company_bytopic <- read_rds("data/company_bytopic.rds")
 
 
 MC3_text_pre <- stopwords_removed %>%
@@ -62,6 +65,7 @@ mc3_nodes1_Other <- MC3_nodes_master %>%
   summarise(counts = sum(counts)) %>%
   mutate(counts = as.numeric(counts)) %>%
   arrange(desc(counts)) 
+
 
 #-----------Dashboard Data table prep----------------------------->
 # Create a data table from the df data frame
@@ -102,6 +106,40 @@ stopwords_removed_freq <- stopwords_removed %>%
   arrange(desc(count)) %>%
   ungroup()
 
+
+#===========Dashboard 4 Data prep----------------------------->>
+
+nodes_df2_topic <- nodes_df2 %>%
+  left_join(company_bytopic, by = c("name" = "id"), unmatched= "drop")%>%
+  mutate(topic_clean = ifelse(is.na(topic),"unknown",topic)) %>%
+  select(-type.y)%>%
+  rename(type = type.x)
+
+# Function to get connected nodes up to a specified degree
+getConnectedNodes <- function(nodeId, degree) {
+  connectedNodes <- data.frame(id = nodeId, degree = 0)  # Initialize with the input node and degree 0
+  visitedNodes <- data.frame(id = nodeId, degree = 0)  # Keep track of visited nodes
+  
+  for (i in 1:degree) {
+    fromNodes <- unique(edges_df2$from[edges_df2$to %in% connectedNodes$id])
+    toNodes <- unique(edges_df2$to[edges_df2$from %in% connectedNodes$id])
+    
+    newNodes <- unique(c(fromNodes, toNodes))
+    newDegrees <- rep(i, length(newNodes))
+    
+    newNodes_df <- data.frame(id = newNodes, degree = newDegrees)
+    newNodes_df <- newNodes_df[!newNodes_df$id %in% visitedNodes$id, ]  # Exclude visited nodes
+    
+    visitedNodes <- rbind(visitedNodes, newNodes_df)  # Add newly visited nodes
+    
+    connectedNodes <- rbind(connectedNodes, newNodes_df)  # Add newly connected nodes
+  }
+  
+  # Keep only the nodes with the lowest degree
+  connectedNodes <- connectedNodes[!duplicated(connectedNodes$id), ]
+  
+  return(connectedNodes)
+}
 
 # Card 1 List here --------------------------------->
 
@@ -239,6 +277,50 @@ cards3 <- list(
 )
 
 
+# Card 4 List here -------------------------------->
+
+cards4 <- list(
+  card(
+    full_screen = TRUE,
+    card_header("Network Graph"),
+    visNetworkOutput("networkPlot"#, height = "500px"))
+    )
+  )
+)
+
+# Value Box Set for the 4th panel here -------------------------------->
+
+
+vbs4 <- list(
+  value_box(
+    title = "Total Revenue (OMU)", 
+    value = textOutput("total_revenue_omu"),
+    showcase = bs_icon("cash-coin"),
+    p("Total revenue of companies involved within network")
+  ),
+  value_box(
+    title = "Highest associated Topic#", 
+    value = textOutput("topic"),
+    showcase = bs_icon("water"),
+    p("Based on number of topics (K) = 7"),
+    theme_color = "info"
+  ),
+  value_box(
+    title = "Number of topics involved", 
+    value = textOutput("no_of_topic"),
+    showcase = bs_icon("box-seam-fill"),
+    p("Number of topics involved with the network (based on K=7)"),
+    theme_color = "info"
+  ),
+  value_box(
+    title = "Top Community Group", 
+    value = textOutput("community"),
+    showcase = bs_icon("people-fill"),
+    p("Community Group with the most participants"),
+    theme_color = "success"
+  )
+)
+
 
 # Define the UI ===================================================>
 ui <- navbarPage(
@@ -320,8 +402,41 @@ ui <- navbarPage(
                    col_widths = c(12, 6, 6),
                    cards3[[1]],cards3[[2]],cards3[[3]])
                   
-            )
-        )
+            ),
+
+#UI Third Panel #4 begin --------------------------------------------->
+
+  tabPanel(
+  "Network Analysis",
+  layout_sidebar(
+    sidebar = sidebar(
+      pickerInput(
+        inputId = "searchNode",
+        label = "Search Names:",
+        selected = "John Smith",
+        choices = sort(nodes_df2$name),
+        options = list(`live-search` = TRUE),
+        multiple = FALSE
+      ),
+      sliderInput("degree", "Nth Degree of relationship:", min = 1, max = 10, value = 2),
+      tags$hr(),  # Add a horizontal line as a divider
+      p(style = "font-family: Arial; font-style: italic; font-size: 16px;", "Graph Filters"),
+      radioButtons("colorOption2", "Visualise nodes by:",
+                   choices = c("View by Community", "View by Type", "View by Degree"),
+                   selected = "View by Community"),
+      p(style = "font-family: Arial; font-size: 16px;", "Layout:"),
+      checkboxInput("layoutToggle", "Hierarchical Layout", value = FALSE),
+      checkboxInput("physicsToggle", "Enable Physics", value = FALSE)
+    ),
+    layout_column_wrap(
+      width = "250px",
+      fill = FALSE,
+      !!!vbs4
+    ),
+    !!!cards4
+    )
+  )
+)
   
 
 # Define the server code =======================================>
@@ -921,6 +1036,147 @@ server <- function(input, output) {
       theme(axis.text.x = element_text(vjust = 1, hjust=1)) +
       scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
   })
+  
+  
+  #-----------------------------------------Dashboard 4 outputs-->
+  
+  output$networkPlot <- renderVisNetwork({
+    selectedNode <- nodes_df2[nodes_df2$name == input$searchNode, ]
+    degree <- input$degree
+    colorOption <- input$colorOption2
+    
+    
+    if (!is.null(selectedNode)) {
+      # Get the node and its connected nodes up to the specified degree
+      connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+      #selectedNodes <- nodes_df2[nodes_df2$id %in% connectedNodes$id, ]
+      selectedNodes <- merge(connectedNodes, nodes_df2, by.x = "id", by.y = "id", all.x = TRUE)
+      selectedEdges <- edges_df2[
+        edges_df2$from %in% connectedNodes$id & edges_df2$to %in% connectedNodes$id,
+      ]
+      
+      # Add color and shape properties based on the selected option
+      if (colorOption == "View by Community") {
+        selectedNodes$group <- selectedNodes$community  
+      } else if (colorOption == "View by Type") {
+        selectedNodes$shape <- "icon"
+        selectedNodes$icon.code <- ifelse(is.na(selectedNodes$new_type), "f1ad", "f007")
+        selectedNodes$icon.color <- ifelse(is.na(selectedNodes$new_type),"#116A7B" ,"#FF2171")
+      } else if (colorOption == "View by Degree") {
+        selectedNodes$group <- selectedNodes$degree
+      }
+      
+      
+      vis <- visNetwork(
+        nodes = selectedNodes,
+        edges = selectedEdges
+      ) %>%
+        visIgraphLayout(layout = "layout_nicely", type = "full", smooth = TRUE) %>%
+        visEdges(color = list(highlight = "#7C3238"), width = 4, arrows = "from") %>%
+        visNodes(
+          borderWidth = 1,
+          shadow = TRUE
+        ) %>%
+        visOptions(
+          highlightNearest = TRUE,
+          nodesIdSelection = TRUE,
+          selectedBy = "community"
+        ) %>%
+        visInteraction(dragNodes = TRUE, 
+                       dragView = TRUE, 
+                       zoomView = TRUE) %>%
+        addFontAwesome()%>%
+        visLegend(
+          addEdges = data.frame(
+            label = c("Beneficial Owner", "Company Contact"),
+            color = c("#9BABB8", "#3E7C59"),
+            stringsAsFactors = FALSE,
+            font.align = "top"
+          ),
+          ncol = 3,
+          width = 0.1
+        )
+      
+      if (input$layoutToggle) {
+        if (input$physicsToggle) {
+          vis <- vis %>% visHierarchicalLayout() %>% visPhysics(enabled = TRUE)
+        } else {
+          vis <- vis %>% visHierarchicalLayout() %>% visPhysics(enabled = FALSE)
+        }
+      } else {
+        if (input$physicsToggle) {
+          vis <- vis %>% visIgraphLayout(layout = "layout_with_fr", type = "full", smooth = TRUE, physics = TRUE)
+        } else {
+          vis <- vis %>% visIgraphLayout(layout = "layout_with_fr", type = "full", smooth = TRUE, physics = FALSE)
+        }
+      }
+      
+      
+    }
+  })
+  
+  
+  {
+    output$total_revenue_omu <- renderText({
+      selectedNode <- nodes_df2[nodes_df2$name == input$searchNode, ]
+      degree <- input$degree
+      
+      if (!is.null(selectedNode)) {
+        connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+        selectedNodes <- nodes_df2[nodes_df2$id %in% connectedNodes$id, ]
+        totalRevenue <- comma(sum(selectedNodes$revenue_omu, na.rm = TRUE))
+        #formattedRevenue <- comma(totalRevenue)
+      }
+    })
+    
+  }
+  {
+    output$topic <- renderText({
+      selectedNode <- nodes_df2_topic[nodes_df2_topic$name == input$searchNode, ]
+      degree <- input$degree
+      
+      if (!is.null(selectedNode)) {
+        connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+        selectedNodes <- nodes_df2_topic[nodes_df2_topic$id %in% connectedNodes$id, ]
+        topic_counts <- table(selectedNodes$topic_clean)
+        max_count_topic <- names(topic_counts)[which.max(topic_counts)]
+        
+        if (max_count_topic == "unknown" && length(topic_counts) > 1) {
+          second_max_count_topic <- names(topic_counts[order(topic_counts, decreasing = TRUE)])[2]
+          max_count_topic <- ifelse(is.na(second_max_count_topic), max_count_topic, second_max_count_topic)
+        }
+      }
+    })
+  }
+  {
+    output$no_of_topic <- renderText({
+      selectedNode <- nodes_df2_topic[nodes_df2_topic$name == input$searchNode, ]
+      degree <- input$degree
+      
+      if (!is.null(selectedNode)) {
+        connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+        selectedNodes <- nodes_df2_topic[nodes_df2_topic$id %in% connectedNodes$id, ]
+        distinct_count <- selectedNodes %>% 
+          filter(topic != "unknown")%>%
+          distinct(topic) %>% 
+          n_distinct()
+      }
+    })
+  }
+  
+  {
+    output$community <- renderText({
+      selectedNode <- nodes_df2[nodes_df2$name == input$searchNode, ]
+      degree <- input$degree
+      
+      if (!is.null(selectedNode)) {
+        connectedNodes <- getConnectedNodes(selectedNode$id, degree)
+        selectedNodes <- nodes_df2[nodes_df2$id %in% connectedNodes$id, ]
+        community_counts <- table(selectedNodes$community)
+        max_community_counts <- names(community_counts)[which.max(community_counts)]
+      }
+    })
+  }
 }
 
 # Return a Shiny app object
