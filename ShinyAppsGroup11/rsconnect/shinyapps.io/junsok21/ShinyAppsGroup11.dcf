@@ -5,10 +5,10 @@ account: junsok21
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9327112
-bundleId: 7409304
+bundleId: 7410909
 url: https://junsok21.shinyapps.io/ShinyAppsGroup11/
-when: 1688216161.66894
-lastSyncTime: 1688216161.66896
+when: 1688279515.45158
+lastSyncTime: 1688279515.4516
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: app_yaowen.R|bslib_main1.R|bslib_search.R|cleaning
+ignoredFiles: Rplot001.jpg

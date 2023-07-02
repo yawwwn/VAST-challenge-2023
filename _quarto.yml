@@ -34,7 +34,9 @@ website:
           href: Minutes/Minutes_03.qmd
         - text: "Meeting 4"
           href: Minutes/Minutes_04.qmd
-        
+        - text: "Meeting 5"
+          href: Minutes/Minutes_05.qmd       
+          
 page-navigation: true
 
 back-to-top-navigation: false

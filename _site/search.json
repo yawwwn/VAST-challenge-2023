@@ -28,6 +28,34 @@
     "text": "Agenda(s)\n\n\n\n\n\n\n\nDiscussion on Project Approach\n\n\n\n\nWork Allocation for Project Proposal\n\n\n\n\nReview on next agenda(s)\n\n\n\n\n\n\n1. Discussion on Project Approach\nThe team members shared their individual approach and the flow based on Take Home Exercise 2 and agreed that we will use Jia Wen’s approach for the time being and do the necessary fine tuning during the project.\nThe team also agreed that more time should be taken to explore the different literature reviews available to understand the factors that maybe related to illegal fishing. Junseok recapped the trans-shipment methodologies that he have read in the literature review that Prof Kam’s shared.\nYao Wen suggested for all of us to work on the common Git, and reminded the team to always pull first before pushing anything. Jia Wen shared some useful links for themes on quarto website.\n\n\n2. Work Allocation on Project Proposal\nThe tasks have been allocated as follows:\n\n\n\nDeliverables\nAssigned to\n\n\n\n\nBackground\nYao Wen\n\n\nProject Topic\nYao Wen\n\n\nMotivation\nYao Wen\n\n\nApproach\nJia Wen (Junseok to add)\n\n\nPlots\nJia Wen (Junseok to add)\n\n\nLiterature Review\nJunseok\n\n\n\n\n\n3. Review on next agenda(s)\nThe team has decided to look into the design layout of Shiny application during the next project meeting. In addition, the team members agreed to keep a lookout for Mini Case 3. Members will explore question one of Mini Case 3 in the coming week before the project meeting to discuss if it is worth switching.\n\n\n5. End of Meeting\nThe meeting ended at 1700. The next meeting would convene on Saturday, 10th June 2023 at 1600."
   },
   {
+    "objectID": "Minutes/Minutes_05.html",
+    "href": "Minutes/Minutes_05.html",
+    "title": "Project Meeting 05",
+    "section": "",
+    "text": "Update on deployment issues\n\n\n\n\nDiscussion on Shiny Application\n\nDashboard\nNetwork Analysis\nTopic Modelling\n\n\n\n\n\nDiscussion on Poster\n\n\n\n\nReview on next Agenda"
+  },
+  {
+    "objectID": "Minutes/Minutes_05.html#dashboard",
+    "href": "Minutes/Minutes_05.html#dashboard",
+    "title": "Project Meeting 05",
+    "section": "2.1 Dashboard",
+    "text": "2.1 Dashboard\nJunseok shared his revised layout for the dashboard with the team. For standardization, he have since modified the insights to the center top of the page. Jia Wen mentioned that the word cloud should not appear in the topic modelling tab. Junseok asked if he should put it below the bullet graph but Jia Wen suggested to put it above the bullet graph as the word cloud give an overview of the product and services before looking at the topic groups."
+  },
+  {
+    "objectID": "Minutes/Minutes_05.html#network-analysis",
+    "href": "Minutes/Minutes_05.html#network-analysis",
+    "title": "Project Meeting 05",
+    "section": "2.2 Network Analysis",
+    "text": "2.2 Network Analysis\nYao Wen shared his revised Network Analysis with the Team, where he includes the heatmap. While looking at the heatmap and the total revenue from respective companies, Jia Wen suggested if we could align the Name of the owners/contact. Currently, the revenue are sorted from the highest to the lowest while the heatmap is in alphabetical order. She mentioned that it might not be ideal at first glance because Michael Bell have the highest revenue and thus, is placed 1st in the bar graph but 5th in the heatmap. Yao Wen said that he will look into it and see if it will be able to fix the sequence.\nHe also showed the revenue comparison box plot that he have created, and the new search page. Jia Wen asked about the topic modelling of k=4 and Yao Wen mentioned that he used based on her fixed value and note that he have to revise it to 7.\nJia Wen was confused about one of the insight in the search page as she thought it refers to the number of different topic group of the company noting that there maybe instances where 1 company have business in multiple categories. Yao Wen shared that he refers it as top associated topic group.\nJia Wen asked if it is ideal because she felt that to detect the anomalies, we could look at the perspective of business having multiple categories. Junseok weighs in as he felt that it is alright to keep the top topic group but would probably rename it as the most associated topic group. Yao Wen said that will do so and create another insights for the number of different topic group. The team also agreed not to create multiple tabs for the graphs as it will impact the results."
+  },
+  {
+    "objectID": "Minutes/Minutes_05.html#topic-modelling",
+    "href": "Minutes/Minutes_05.html#topic-modelling",
+    "title": "Project Meeting 05",
+    "section": "2.3 Topic Modelling",
+    "text": "2.3 Topic Modelling\nJia Wen shared the link of her quarto document where she did the statistical graphs. She mentioned there is not much variables to use and we would only look at it from the revenue’s perspective to do the anova test and the type for the chi-square test. Also, she did a visualization for the confidence interval and asked Junseok to assist in incorporating it into Shiny so that she could focus on the poster and the user guide."
+  },
+  {
     "objectID": "Minutes/Minutes_04.html",
     "href": "Minutes/Minutes_04.html",
     "title": "Project Meeting 04",
@@ -67,7 +95,7 @@
     "href": "Proposal/Proposal.html",
     "title": "Visual Analytics Project Proposal",
     "section": "",
-    "text": "In this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal, unreported and unregulated (IUU) fishing, which is said to be a major contributor to overfishing globally. The illegal fishing trade has been linked to organized crime, and human rights violations are common when fishing operations are conducted without regulatory oversight. FishEye International is a nonpartisan organization has spent the past years collecting data and has made public several of their datasets to enlist the help of the Visual Analytics community to help analyse the data and make recommendations."
+    "text": "In this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal, unreported and unregulated (IUU) fishing, which is said to be a major contributor to overfishing globally. The illegal fishing trade has been linked to organized crime, and human rights violations are common when fishing operations are conducted without regulatory oversight. FishEye International is a nonpartisan organization whom spent the past years collecting data and have gain access to an international finance corporation’s database on fishing related companies. FishEye is enlisting the help of the Visual Analytics community to assist in analysing the data and making recommendations."
   },
   {
     "objectID": "Proposal/Proposal.html#evaluating-link-inference-bundled-data-sets",
