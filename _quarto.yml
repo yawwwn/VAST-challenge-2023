@@ -15,15 +15,15 @@ website:
     collapse-below: lg
     right:
       - text: "Home"
-        href: "about.html"
+        href: "index.html"
       - text: "Shiny App"
         href: "https://junsok21.shinyapps.io/ShinyAppsGroup11/"
       - text: "Proposal"
         href: "Proposal/Proposal.html"
       - text: "User Guide"
-        href: "index.html"
+        href: "userguide.html"
       - text: "Poster"
-        href: "index.html"
+        href: "poster.html"
       - text: "Meeting Minutes"
         menu: 
         - text: "Meeting 1"

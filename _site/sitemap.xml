@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http:isss608-vast-2023-grp11.netlify.app/poster.html</loc>
+    <lastmod>2023-07-02T11:42:42.814Z</lastmod>
+  </url>
+  <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/index.html</loc>
-<<<<<<< HEAD
-    <lastmod>2023-07-01T17:00:59.413Z</lastmod>
-=======
-    <lastmod>2023-07-02T09:33:28.039Z</lastmod>
->>>>>>> c1e460fc9b2e56d7847191c97ccf3f449de15730
+    <lastmod>2023-07-02T11:42:43.044Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_01.html</loc>
-    <lastmod>2023-07-02T09:33:29.395Z</lastmod>
+    <lastmod>2023-07-02T11:42:43.405Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_03.html</loc>
-    <lastmod>2023-07-02T09:33:30.107Z</lastmod>
+    <lastmod>2023-07-02T11:42:43.725Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_02.html</loc>
-    <lastmod>2023-07-02T09:33:30.571Z</lastmod>
+    <lastmod>2023-07-02T11:42:43.988Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_05.html</loc>
-    <lastmod>2023-07-02T09:37:28.061Z</lastmod>
+    <lastmod>2023-07-02T11:42:44.309Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Minutes/Minutes_04.html</loc>
-    <lastmod>2023-07-02T09:33:31.976Z</lastmod>
+    <lastmod>2023-07-02T11:42:44.609Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/about.html</loc>
-    <lastmod>2023-07-02T09:33:32.982Z</lastmod>
+    <lastmod>2023-07-02T11:42:44.958Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Proposal/Proposal.html</loc>
-    <lastmod>2023-07-02T09:33:33.801Z</lastmod>
+    <lastmod>2023-07-02T11:42:45.247Z</lastmod>
   </url>
   <url>
     <loc>http:isss608-vast-2023-grp11.netlify.app/Untitled.html</loc>
-    <lastmod>2023-07-02T09:33:34.800Z</lastmod>
+    <lastmod>2023-07-02T11:42:45.623Z</lastmod>
   </url>
   <url>
-    <loc>http:isss608-vast-2023-grp11.netlify.app/ShinyAppsGroup11/cleaning/init_doc.html</loc>
-    <lastmod>2023-07-02T09:33:36.243Z</lastmod>
+    <loc>http:isss608-vast-2023-grp11.netlify.app/userguide.html</loc>
+    <lastmod>2023-07-02T11:42:45.822Z</lastmod>
   </url>
 </urlset>

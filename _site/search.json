@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "ISSS608-VAA Project",
+    "objectID": "poster.html",
+    "href": "poster.html",
+    "title": "Poster",
     "section": "",
-    "text": "Welcome to our page for ISSS608. In this website, you will find our project prepared for this course."
+    "text": "About\n\n1+1+1+1+1\n\n[1] 5"
   },
   {
     "objectID": "Minutes/Minutes_01.html",
@@ -119,38 +119,17 @@
     "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
   },
   {
+    "objectID": "Untitled.html#quarto",
+    "href": "Untitled.html#quarto",
+    "title": "test",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
     "objectID": "Untitled.html#running-code",
     "href": "Untitled.html#running-code",
     "title": "test",
     "section": "Running Code",
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
-    "objectID": "ShinyAppsGroup11/cleaning/init_doc.html",
-    "href": "ShinyAppsGroup11/cleaning/init_doc.html",
-    "title": "init_doc",
-    "section": "",
-    "text": "pacman::p_load(jsonlite, tidygraph, tidyverse, ggraph, ggiraph, visNetwork, graphlayouts, ggforce, tidytext, skimr, treemap, ggdist, RColorBrewer)"
-  },
-  {
-    "objectID": "ShinyAppsGroup11/cleaning/init_doc.html#summary-of-summary-data",
-    "href": "ShinyAppsGroup11/cleaning/init_doc.html#summary-of-summary-data",
-    "title": "init_doc",
-    "section": "3. summary of summary data",
-    "text": "3. summary of summary data\n\nsummary_data2 <- summary_data %>%\n  filter(total_relation>1) \n\nskim(summary_data2) \n\n\nData summary\n\n\nName\nsummary_data2\n\n\nNumber of rows\n1962\n\n\nNumber of columns\n5\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n1\n\n\nnumeric\n4\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\nid\n0\n1\n7\n22\n0\n1962\n0\n\n\n\nVariable type: numeric\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmean\nsd\np0\np25\np50\np75\np100\nhist\n\n\n\n\ntotal_revenue_omu\n0\n1\n827480.44\n9794417.74\n0\n0\n25094.85\n118683.8\n286860134\n▇▁▁▁▁\n\n\ncompanies_owned\n0\n1\n1.68\n0.96\n0\n1\n2.00\n2.0\n9\n▆▇▁▁▁\n\n\ncompanies_contact\n0\n1\n0.73\n0.76\n0\n0\n1.00\n1.0\n5\n▇▁▁▁▁\n\n\ntotal_relation\n0\n1\n2.41\n0.92\n2\n2\n2.00\n3.0\n11\n▇▁▁▁▁\n\n\n\n\n\n\n(for individuals with total relation >1) Median of Companies owned = 2,"
-  },
-  {
-    "objectID": "ShinyAppsGroup11/cleaning/init_doc.html#median-of-company-contacts-1",
-    "href": "ShinyAppsGroup11/cleaning/init_doc.html#median-of-company-contacts-1",
-    "title": "init_doc",
-    "section": "Median of COmpany contacts = 1",
-    "text": "Median of COmpany contacts = 1"
-  },
-  {
-    "objectID": "ShinyAppsGroup11/cleaning/init_doc.html#median-of-revenue-25k",
-    "href": "ShinyAppsGroup11/cleaning/init_doc.html#median-of-revenue-25k",
-    "title": "init_doc",
-    "section": "median of revenue = 25K",
-    "text": "median of revenue = 25K"
   }
 ]

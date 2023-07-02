@@ -198,10 +198,12 @@ search: false
 <div class="divider" style="height: 1px; background-color: #eee;"></div>
 <div class="container-2" style="width: 100%; max-width: none; margin-left: auto; margin-right: auto;">
   <div class="hero-wrapper">
-    <div class="hero-split">
+    <div class="hero-split" style="margin-right: 55px;">
       <h1 class="centered-heading margin-bottom-32px" style="margin-top: 0; margin-bottom: 32px; font-size: 35px; font-weight: 600; line-height: 52px; color: #5a96e3; text-align: center;">ABOUT OUR PROJECT</h1>
       <div style="text-align: left;">
-        <p class="margin-bottom-24px" style="margin-bottom: 24px; color: #57585a;"><strong>FishEye International</strong>, a non-profit focused on countering IUU fishing, has been given access to an international finance corporation's database on fishing-related companies. Our team has undertaken the task to help FishEye conduct a visual analytics study and exploration with the aim to identify fishing business anomalies that could indicate a company is involved in IUU.</p>
+        <p class="margin-bottom-24px" style="margin-bottom: 24px; color: #57585a;">The latest <a href="https://vast-challenge.github.io/2023/"><strong>Vast Challenge 2023</strong></a> explores into illegal, unreported, and unregulated (IUU) fishing as it is a major contributor to overfishing worldwide. These activities pose a threat not only to fragile marine ecosystems, but also to food security in coastal communities and regional stability more broadly. </p>
+        <p class="margin-bottom-24px" style="margin-bottom: 24px; color: #57585a;">In particular, our group would be focusing on the VAST Challenge <a href="https://vast-challenge.github.io/2023/MC3.html">Mini Challenge 3</a>, where <strong>FishEye International</strong>, a non-profit focused on countering IUU fishing, has been given access to an international finance corporation's database on fishing-related companies. Our group has undertaken the task to help FishEye conduct a visual analytics study and exploration with the aim to identify fishing business anomalies that could indicate a company is involved in IUU.</p>
+        <p class="margin-bottom-24px" style="margin-bottom: 24px; color: #57585a;">As part of our analysis, we developed a interactive web application using Shiny and R. It would help FishEye International better visualise the graph data and further explore relationships of the fishing-related comapnies.</p>
       </div>
     </div>
     <div class="hero-split">
@@ -243,7 +245,7 @@ search: false
                         display: flex;">
                         <h3 class="team-member-name-two" style="margin-top:10px;margin-bottom:12px;font-size:30px;font-weight:600;line-height:46px;color:#5a96e3;text-align:center;">Proposal</h3>
                         <p class="team-member-text" style="margin-bottom:20px;text-align:left">Motivation of our project, problems or issues that the project will address, the approach that our team plans to take to solve the problem, and early prototypes or storyboards.</p>
-                        <a href="#" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
+                        <a href="https://isss608-vast-2023-grp11.netlify.app/proposal/proposal" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
                            <div>How we started</div>
                            <div class="arrow-embed w-embed" style="margin-left: 2px;
                               display: flex;">
@@ -265,8 +267,8 @@ search: false
                         padding-right: 24px;
                         display: flex;">
                         <h3 class="team-member-name-two" style="margin-top:10px;margin-bottom:12px;font-size:30px;font-weight:600;line-height:46px;color:#5a96e3;">User Guide</h3>
-                        <p class="team-member-text" style="margin-bottom:20px;text-align:left">Step-by-step guide on how to use the data visualisation functions designed.</p>
-                        <a href="#" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
+                        <p class="team-member-text" style="margin-bottom:20px;text-align:left">Step-by-step guide on how to use the data visualisation functions designed within our Shiny application</p>
+                        <a href="https://isss608-vast-2023-grp11.netlify.app/userguide" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
                            <div>Learn how to use</div>
                            <div class="arrow-embed w-embed" style="margin-left: 2px;
                               display: flex;">
@@ -288,7 +290,7 @@ search: false
                         display: flex;">
                         <h3 class="team-member-name-two" style="margin-top:10px;margin-bottom:12px;font-size:30px;font-weight:600;line-height:46px;color:#5a96e3;">Poster</h3>
                         <p class="team-member-text" style="margin-bottom:20px;text-align:left">One pager on: Issues and problems, Motivation, Approach, Results and Future Work </p>
-                        <a href="#" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
+                        <a href="https://isss608-vast-2023-grp11.netlify.app/poster" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
                            <div>See our one-pager</div>
                            <div class="arrow-embed w-embed" style="margin-left: 2px;
                               display: flex;">
@@ -311,8 +313,16 @@ search: false
       <div class="home-section-wrap" style="margin-bottom: 60px; text-align: left;">
          <div class="label cc-light" style="letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-size: 12px; font-weight: 500; line-height: 20px; opacity: .6;">OUR APPLICATION</div>
          <h2 class="section-heading" style="margin-top: 10px; margin-bottom: 20px; font-size: 36px; font-weight: 600; line-height: 50px; color: #5a96e3;">SHINY APP</h2>
-         <p class="paragraph-light" style="margin-bottom: 10px; opacity: .6;">Nulla vel sodales tellus, quis condimentum enim. Nunc porttitor venenatis feugiat. Etiam quis faucibus erat, non accumsan leo. Aliquam erat volutpat. Vestibulum ac faucibus eros. Cras ullamcorper gravida tellus ut consequat.</p>
-         <a href="#" class="w-button" style="display: inline-block; padding: 10px 20px; background-color: #5a96e3; color: #fff; text-decoration: none; font-size: 16px; font-weight: 500; border-radius: 4px; text-align: left;">EXPLORE NOW</a>
+         <p class="paragraph-light" style="margin-bottom: 10px; opacity: .6;">
+  Our Web Application runs on <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/index.html">R Shiny package</a> and allows users to draw insights through visual analytics, uncover anomalies, and identify suspicious companies that could be partaking in illegal fishing activities.</p>
+  <ul style="margin-bottom: 10px; opacity: .6;">
+  <li>Section 1 (Dashboard): Provides a comprehensive overview of key insights drawn.</li>
+  <li>Section 2 (Network Analysis): Explores the business relationships between individuals and companies and allows us to locate anomalous companies.</li>
+  <li>Section 3 (Topic Analysis): Utilizes topic modeling to categorize the companies' products and services into different topics.</li>
+  <li>Section 4 (Deep-dive investigation): Allows users to search for an individual/company, view its network, and obtain key insights.</li>
+</ul>
+
+         <a href="https://junsok21.shinyapps.io/ShinyAppsGroup11/" class="w-button" style="display: inline-block; padding: 10px 20px; background-color: #5a96e3; color: #fff; text-decoration: none; font-size: 16px; font-weight: 500; border-radius: 4px; text-align: left;">EXPLORE NOW</a>
       </div>
    </div>
 </div>
@@ -324,44 +334,39 @@ search: false
       <div class="label cc-light" style="letter-spacing:1px;text-transform:uppercase;margin-top:30px;margin-bottom:10px;font-size:12px;font-weight:500;line-height:20px;opacity:.6;">About Us</div>
       <h2 class="work-heading" style="margin-top:10px;margin-bottom:20px;font-size:36px;font-weight:600;line-height:50px;color:#5a96e3;">OUR TEAM</h2>
       <div class="container-2" style="width:100%;max-width:none;margin-left:auto;margin-right:auto;">
-         <p class="centered-subheading" style="margin-bottom:10px;max-width:530px;text-align:center;margin-left:auto;margin-right:auto;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sagittis eros. Quisque quis euismod lorem.</p>
+         <p class="centered-subheading" style="margin-bottom:10px;max-width:530px;text-align:center;margin-left:auto;margin-right:auto;">We're a team of data enthusiasts that are still in our learning journey in the world of data visualisation and visual analytics. Feel free to reach out to us below!</p>
       <div class="team-grid" style="display: grid; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr; grid-gap: 40px; margin-top: 40px; margin-left: auto; margin-right: auto;">
             <div id="w-node-eb8404e1-c89e-34ff-23d6-11d15e789e2b-b6bcb00a" class="team-card" style="text-align:center;flex-direction:column;align-items:center;font-size:14px;line-height:22px;display:flex;grid-area:span 1 / span 1 / span 1 / span 1;">
-               <img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a55c612aae2_portfolio%202%20-%20wide.svg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
+               <img src="/image/junseok.jpeg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
                <div class="team-member-name-2" style="margin-bottom: 6px;
                   font-size: 20px;
                   font-weight: 500;
-                  line-height: 32px;">Full Name</div>
-               <div class="team-member-position" style="margin-bottom: 24px;">Role at C<br>&zwj;Previously: Company 1, Company 2</div>
-               <p style="margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  line-height: 32px;"><a href="https://www.linkedin.com/in/junseokkim1/"><strong>KIM JUNSEOK</strong></a></div>
+               <div class="team-member-position" style="margin-bottom: 24px;">SMU Master of IT in Business (Analytics)</div>
             </div>
             <div id="w-node-eb8404e1-c89e-34ff-23d6-11d15e789e36-b6bcb00a" class="team-card" style="text-align:center;flex-direction:column;align-items:center;font-size:14px;line-height:22px;display:flex;grid-area:span 1 / span 1 / span 1 / span 1;">
-               <img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a55c612aae2_portfolio%202%20-%20wide.svg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
+               <img src="/image/jiawen.jpeg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
                <div class="team-member-name-2" style="margin-bottom: 6px;
                   font-size: 20px;
                   font-weight: 500;
-                  line-height: 32px;">Full Name</div>
-               <div class="team-member-position" style="margin-bottom: 24px;">Role at Company<br>Previously: Company 1, Company 2</div>
-               <p style="margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  line-height: 32px;"><a href="https://www.linkedin.com/in/jia-wen-oh/"><strong>OH JIA WEN</strong></a></div>
+               <div class="team-member-position" style="margin-bottom: 24px;">SMU Master of IT in Business (Analytics)</div>
             </div>
             <div id="w-node-eb8404e1-c89e-34ff-23d6-11d15e789e4a-b6bcb00a" class="team-card" style="text-align:center;flex-direction:column;align-items:center;font-size:14px;line-height:22px;display:flex;grid-area:span 1 / span 1 / span 1 / span 1;">
-               <img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a55c612aae2_portfolio%202%20-%20wide.svg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
+               <img src="/image/yaowen.jpeg" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
                <div class="team-member-name-2" style="margin-bottom: 6px;
                   font-size: 20px;
                   font-weight: 500;
-                  line-height: 32px;">Full Name</div>
-               <div class="team-member-position" style="margin-bottom: 24px;">Role at Company<br>Previously: Company 1, Company 2</div>
-               <p style="margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
+                  line-height: 32px;"><a href="www.linkedin.com/in/yao-wen-thng"><strong>THNG YAO WEN</strong></a></div>
+               <div class="team-member-position" style="margin-bottom: 24px;">SMU Master of IT in Business (Analytics)</div></div>
             <div id="w-node-eb8404e1-c89e-34ff-23d6-11d15e789e54-b6bcb00a" class="team-card" style="text-align:center;flex-direction:column;align-items:center;font-size:14px;line-height:22px;display:flex;grid-area:span 1 / span 1 / span 1 / span 1;">
-               <img src="https://uploads-ssl.webflow.com/62434fa732124a0fb112aab4/62434fa732124a55c612aae2_portfolio%202%20-%20wide.svg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
+               <img src="/image/tskam.jpeg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
                <div class="team-member-name-2" style="margin-bottom: 6px;
                   font-size: 20px;
                   font-weight: 500;
-                  line-height: 32px;">Full Name</div>
-               <div class="team-member-position" style="margin-bottom: 24px;">Role at Company<br>Previously: Company 1, Company 2</div>
-               <p style="margin-bottom: 10px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                     <div style="height: 20px;"></div> <!-- Empty divider space -->
+                  line-height: 32px;"><a href="https://faculty.smu.edu.sg/profile/kam-tin-seong-486"><strong>PROF KAM TIN SEONG</strong></a></div>
+               <div class="team-member-position" style="margin-bottom: 24px;">Full-time Faculty</div>
+               <div style="height: 20px;"></div> <!-- Empty divider space -->
             </div>
          </div>
       </div>

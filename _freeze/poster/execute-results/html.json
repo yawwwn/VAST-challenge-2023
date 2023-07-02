@@ -1,0 +1,14 @@
+{
+  "hash": "db8949c17ebae1a395d338e642fe3ada",
+  "result": {
+    "markdown": "---\ntitle: \"Poster\"\n---\n\n\nAbout\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1+1+1+1+1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 5\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
