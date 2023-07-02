@@ -404,10 +404,10 @@ ui <- navbarPage(
                   
             ),
 
-#UI Third Panel #4 begin --------------------------------------------->
+#UI 4th Panel #4 begin --------------------------------------------->
 
   tabPanel(
-  "Network Analysis",
+  "Deep-Dive Investigation",
   layout_sidebar(
     sidebar = sidebar(
       pickerInput(
