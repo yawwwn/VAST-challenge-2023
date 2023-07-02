@@ -10,7 +10,7 @@ website:
   navbar:
     background: "#f0eeeb"
     logo: image/fisheye_rev.png
-    logo-alt: "ISSS608 VAA Group 9"
+    logo-alt: "ISSS608 VAA Group 11"
     title: false
     collapse-below: lg
     right:
