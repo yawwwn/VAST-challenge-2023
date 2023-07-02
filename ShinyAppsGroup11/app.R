@@ -12,7 +12,6 @@ library(plotly)
 library(DT)
 library(data.table)
 library(gt)
-library(ggplot2)
 library(bulletr)
 library(ggthemes)
 library(gtExtras)
@@ -24,21 +23,25 @@ library(visNetwork)
 library(heatmaply)
 library(igraph)
 library(scales)
+library(lobstr)
+library(ggstatsplot)
+library(ggdist)
+library(PMCMRplus)
 
+print(mem_used())
 #-------------------------------------------> Must have packages
 
 options(scipen = 999) #disables scientific notation
 
 
 stopwords_removed <- read.csv("data/stopwords_removed.csv")
-stopwords_removed_join <- read.csv("data/stopwords_removed_join.csv")
+stopwords_removed_join <- read.csv("data/stopwords_removed_join.csv") # for K = 7
 summary_data <- read.csv("data/summary_data.csv")
 MC3_nodes_master <- read.csv("data/MC3_nodes_master.csv")
 MC3_nodes_master_revenue <- read.csv("data/MC3_nodes_master_revenue.csv")
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
 edges_df2 <- read_rds("data/edges_df2.rds")
-
 
 
 MC3_text_pre <- stopwords_removed %>%
@@ -49,7 +52,32 @@ MC3_text_pre <- stopwords_removed %>%
 
 MC3_text <- as.matrix(MC3_text_pre)
 
+mc3_nodes1_Other <- MC3_nodes_master %>%
+  filter(!is.na(country)) %>%
+  group_by(country) %>%
+  summarise(counts = n()) %>%
+  arrange(desc(counts)) %>%
+  mutate(country = ifelse(row_number() > 3, "Other", country)) %>%
+  group_by(country) %>%
+  summarise(counts = sum(counts)) %>%
+  mutate(counts = as.numeric(counts)) %>%
+  arrange(desc(counts)) 
 
+#-----------Dashboard Data table prep----------------------------->
+# Create a data table from the df data frame
+dt <- data.table(MC3_nodes_master)
+
+# Create a new data table with the count of types for each id
+MC3_nodes_master_count <- dt[, .N, by = c("id", "type")]
+# Reshape the data table to have type values as columns and group by ID in rows
+wide_dt <- dcast(MC3_nodes_master_count, id ~ type, value.var = "N")
+# Replace NA values with 0
+wide_dt[is.na(wide_dt)] <- 0
+wide_dt[, N := rowSums(.SD), .SDcols = -"id"]
+wide_dt <- wide_dt[order(-N)]
+wide_dt[, "NA" := NULL]
+
+#===========Dashboard Data table prep----------------------------->
 # create models with different number of topics
 #result <- ldatuning::FindTopicsNumber(
 #  MC3_text,
@@ -92,8 +120,9 @@ cards1 <- list(
        layout_sidebar(
          fillable = TRUE,
          sidebar = sidebar(
+           width = 100,
            numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
-           actionButton("run_button1", "Generate"),
+           actionButton("run_button1", "Go"),
          ), card_body(wordcloud2Output('wordcloud2')
          ))),
   card(
@@ -187,7 +216,8 @@ cards2 <- list(
 
 # Card 3 List here ----------------------------------->
 
-cards3 <- card(full_screen = TRUE, card_header("Select Number of Topic Group"),
+cards3 <- list(
+  card(full_screen = TRUE, card_header("Select Number of Topic Group"),
      layout_sidebar(
        fillable = TRUE,
        sidebar = sidebar(
@@ -195,6 +225,17 @@ cards3 <- card(full_screen = TRUE, card_header("Select Number of Topic Group"),
          actionButton("run_button", "Generate")
        ), card_body(plotlyOutput("myplot"))
      )
+    ),
+  card(
+    full_screen = FALSE,
+    card_header("ANOVA Test"),
+    plotOutput("statplot1")
+  ),
+  card(
+    full_screen = FALSE,
+    card_header("Confidence Interval"),
+    plotOutput("statplot2")
+  )
 )
 
 
@@ -275,55 +316,31 @@ ui <- navbarPage(
   # Third panel tab
   tabPanel(
     "Topic Analysis",
-    layout_columns(cards3)
-           )
+    layout_columns(fill = FALSE,
+                   col_widths = c(12, 6, 6),
+                   cards3[[1]],cards3[[2]],cards3[[3]])
+                  
+            )
         )
   
 
 # Define the server code =======================================>
 server <- function(input, output) {
   set.seed(1234)  # Set the seed to 1234
-
+  
   wordcloudinput <- eventReactive(input$run_button1, {
     print("Run button 1 is working!")
     input$size
   })
   
   output$wordcloud2 <- renderWordcloud2({
+    set.seed(1234)  # Set the seed to 1234
     wordcloud2(data=stopwords_removed_freq, wordcloudinput())
-  })
-  
-  word_probs <- eventReactive(input$run_button, {
-    print("Run button 2 is working!")
-    LDA(MC3_text, input$topic_group , method = "Gibbs", control = list(iter = 25, verbose = 25)) %>%
-      tidy(matrix = "beta") %>%
-      group_by(topic) %>%
-      top_n(15, beta) %>%
-      ungroup() %>%
-      mutate(term2 = fct_reorder(term, beta))
-  })
-  
-  output$myplot <- renderPlotly({
-    ggplot(word_probs(), aes(term2, beta, fill = as.factor(topic))) +
-      geom_col(show.legend = FALSE) +
-      facet_wrap(~ topic, scales = "free") +
-      coord_flip()
   })
   
 
   # Company plot
   output$company_plot <- renderPlot({
-    mc3_nodes1_Other <- MC3_nodes_master %>%
-      filter(!is.na(country)) %>%
-      group_by(country) %>%
-      summarise(counts = n()) %>%
-      arrange(desc(counts)) %>%
-      mutate(country = ifelse(row_number() > 3, "Other", country)) %>%
-      group_by(country) %>%
-      summarise(counts = sum(counts)) %>%
-      mutate(counts = as.numeric(counts)) %>%
-      arrange(desc(counts)) 
-    
     ggplot(mc3_nodes1_Other, aes(x = reorder(country, -counts), y = counts)) +
       geom_bar(stat = "identity", fill = '#3498db') +
       geom_text(aes(label = format(counts, big.mark = ",")), vjust = -0.5) +
@@ -359,24 +376,6 @@ server <- function(input, output) {
   
   #Company Data table
   output$company_dt <- DT:: renderDataTable({
-    # Create a data table from the df data frame
-    dt <- data.table(MC3_nodes_master)
-    
-    
-    # Create a new data table with the count of types for each id
-    MC3_nodes_master_count <- dt[, .N, by = c("id", "type")]
-    
-    # Reshape the data table to have type values as columns and group by ID in rows
-    wide_dt <- dcast(MC3_nodes_master_count, id ~ type, value.var = "N")
-    
-    # Replace NA values with 0
-    wide_dt[is.na(wide_dt)] <- 0
-    
-    
-    wide_dt[, N := rowSums(.SD), .SDcols = -"id"]
-    
-    wide_dt <- wide_dt[order(-N)]
-    wide_dt[, "NA" := NULL]
     # Update the code to display only the top 10 rows
     datatable(wide_dt[1:10,]) 
   })
@@ -384,7 +383,7 @@ server <- function(input, output) {
   #topic Revenue bullet graph 
 
   output$bullet_topics <- render_gt({
-    stopwords_removed_join %>%
+      stopwords_removed_join %>%
       group_by(`topic`) %>%
       summarise('Average Revenue of Each topic vs Global Average' = mean(revenue_omu)) %>%
       mutate(target = mean(stopwords_removed_join$revenue_omu)) %>%
@@ -871,8 +870,58 @@ server <- function(input, output) {
     
     ggplotly(p)
   })
+  
+  #-------------------------------------------Topic modeling Section--->
+  
+  word_probs <- eventReactive(input$run_button, {
+    print("Run button 2 is working!")
+    LDA(MC3_text, input$topic_group , method = "Gibbs", control = list(iter = 25, verbose = 25)) %>%
+      tidy(matrix = "beta") %>%
+      group_by(topic) %>%
+      top_n(15, beta) %>%
+      ungroup() %>%
+      mutate(term2 = fct_reorder(term, beta))
+  })
+  
+  output$myplot <- renderPlotly({
+    ggplot(word_probs(), aes(term2, beta, fill = as.factor(topic))) +
+      geom_col(show.legend = FALSE) +
+      facet_wrap(~ topic, scales = "free") +
+      coord_flip()
+  })
+  
+  output$statplot1 <- renderPlot({
+    ggbetweenstats(stopwords_removed %>%
+                  left_join(word_probs(), by = c("word" = "term2"), unmatched= "drop") %>%
+                  na.omit(),
+                   x= topic, y= revenue_omu, type ="np",
+                   xlab= "Topic Group", ylab = "Revenue($)",
+                   title = "Comparison of Revenue across Topic Group",
+                   pairwise.comparisons = TRUE, pairwise.display ="ns", conf.level = 0.95
+    ) +
+      scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
+  })
+  
+  
+  output$statplot2 <- renderPlot({
+      ggplot(data = stopwords_removed %>%
+               left_join(word_probs(), by = c("word" = "term2"), unmatched= "drop") %>%
+               na.omit(), 
+           aes(x = topic, y = revenue_omu)) +
+      stat_pointinterval(aes(interval_color = after_stat(level)),
+                         point_interval = "median_qi",
+                         .width = c(0.95,0.99),
+                         point_color = "#C93312") +
+      labs(title = "Visualizing Confidence Intervals of Median Revenue", 
+           x = "Topic Group", y = "Revenue($)") +
+      
+      #add colors to graph 
+      scale_color_manual(values = c("#446455","#D3DDDC"), 
+                         aesthetics = "interval_color") +
+      theme(axis.text.x = element_text(vjust = 1, hjust=1)) +
+      scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
+  })
 }
-
 
 # Return a Shiny app object
 
