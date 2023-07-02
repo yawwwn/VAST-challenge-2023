@@ -1,4 +1,4 @@
-
+#-------------------------------------------> Must have packages
 library(shiny)
 library(bslib)
 library(conflicted)
@@ -6,7 +6,6 @@ library(tidyverse)
 conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::lag)
 library(tidytext)
-library(ldatuning)
 library(wordcloud2)
 library(topicmodels)
 library(plotly)
@@ -20,25 +19,16 @@ library(gtExtras)
 library(ggiraph)
 library(hrbrthemes)
 library(svglite)
-library(dplyr)
-library(visNetwork)
-library(shinyWidgets)
-library(scales)
 conflicts_prefer(plotly::layout)
+library(visNetwork)
 library(heatmaply)
-library(readr)
 library(igraph)
-library(bsicons)
-library(graphlayouts)
-library(ggforce)
-library(skimr)
-library(treemap)
-library(ggdist)
-library(RColorBrewer)
-library(tm)
-library(udpipe)
-library(lattice)
-library(stringr)
+library(scales)
+
+#-------------------------------------------> Must have packages
+
+options(scipen = 999) #disables scientific notation
+
 
 stopwords_removed <- read.csv("data/stopwords_removed.csv")
 stopwords_removed_join <- read.csv("data/stopwords_removed_join.csv")
@@ -48,9 +38,6 @@ MC3_nodes_master_revenue <- read.csv("data/MC3_nodes_master_revenue.csv")
 nodes_df2 <- read_rds("data/nodes_df2.rds")
 mc3_edges_country <- read_rds("data/mc3_edges_country.rds")
 edges_df2 <- read_rds("data/edges_df2.rds")
-
-
-options(scipen = 999) #disables scientific notation
 
 
 
@@ -92,7 +79,7 @@ stopwords_removed_freq <- stopwords_removed %>%
 
 cards1 <- list(
   card(
-    full_screen = TRUE,
+    full_screen = FALSE,
     card_header("Counts by Country"),
     plotOutput("company_plot")
   ),
@@ -101,8 +88,16 @@ cards1 <- list(
     card_header("Company Data Table"),
     DT:: dataTableOutput("company_dt", width = "100%", height = "auto")
   ),
+  card(full_screen = FALSE, card_header("Select Size of Word Cloud"),
+       layout_sidebar(
+         fillable = TRUE,
+         sidebar = sidebar(
+           numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
+           actionButton("run_button1", "Generate"),
+         ), card_body(wordcloud2Output('wordcloud2')
+         ))),
   card(
-    full_screen = FALSE,
+    full_screen = TRUE,
     card_header("Topics Average Revenue"),
     gt_output("bullet_topics")
   )
@@ -115,20 +110,20 @@ cards1 <- list(
 value_box_1_1 <- value_box(
   title = "Median of the Number of Companies Owned per Person",
   value = "2 Companies",
-  showcase = bsicons::bs_icon("align-bottom")
-)
+  showcase = bsicons::bs_icon("align-bottom"),
+  theme_color = "info")
 
 value_box_1_2 <- value_box(
   title = "Median of the Number of Companies Contacts per Person",
   value =  "1 Company",
   showcase = bsicons::bs_icon("align-center"),
-  theme_color = "dark")
+  theme_color = "primary")
 
 value_box_1_3 <- value_box(
   title = "Median Revenue per Person",
   value = "$25,000",
   showcase = bsicons::bs_icon("handbag"),
-  theme_color = "secondary")
+  theme_color = "success")
 
 # Card 2 List here --------------------------------->
 
@@ -192,25 +187,15 @@ cards2 <- list(
 
 # Card 3 List here ----------------------------------->
 
-cards3 <- list(
-
-card(full_screen = TRUE, card_header("Select Size of Word Cloud"),
+cards3 <- card(full_screen = TRUE, card_header("Select Number of Topic Group"),
      layout_sidebar(
        fillable = TRUE,
        sidebar = sidebar(
-            numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
-            actionButton("run_button1", "Generate"),
-            ), card_body(wordcloud2Output('wordcloud2')
-     ))),
-
-card(full_screen = TRUE, card_header("Select Number of Topic Group"),
-     layout_sidebar(
-       fillable = TRUE,
-       sidebar = sidebar(
-         numericInput("topic_group", "Number of Topic Group", value = 7, min = 2, max = 20, step = 1),
+         numericInput("topic_group", "Number of Topic Group", value = 6, min = 2, max = 20, step = 1),
          actionButton("run_button", "Generate")
-       ), card_body(plotlyOutput("myplot"))))
-  )
+       ), card_body(plotlyOutput("myplot"))
+     )
+)
 
 
 
@@ -226,8 +211,8 @@ ui <- navbarPage(
     "Dashboard",
     layout_columns(
       fill = FALSE,
-      col_widths = c(4, 4, 4, 4, 4),
-      value_box_1_1, value_box_1_2, value_box_1_3, cards1[[1]], cards1[[2]], cards1[[3]]),
+      col_widths = c(4, 4, 4, 3, 3, 3, 3),
+      value_box_1_1, value_box_1_2, value_box_1_3, cards1[[1]], cards1[[2]], cards1[[3]], cards1[[4]])
     ),
   
   #UI Second Panel #2 begin --------------------------------------------->
@@ -290,22 +275,10 @@ ui <- navbarPage(
   # Third panel tab
   tabPanel(
     "Topic Analysis",
-    navset_tab(
-      id = "myNavset",
-      nav_panel(title = "Wordcloud",
-                layout_columns(
-                  cards3[[1]]
-        )),
-      nav_panel(title = "Select the Number of Topics",
-                  layout_columns(
-                   cards3[[2]]
-               )
-              )
+    layout_columns(cards3)
            )
-    )
-  )
-
-
+        )
+  
 
 # Define the server code =======================================>
 server <- function(input, output) {
@@ -404,7 +377,8 @@ server <- function(input, output) {
     
     wide_dt <- wide_dt[order(-N)]
     wide_dt[, "NA" := NULL]
-    datatable(wide_dt)
+    # Update the code to display only the top 10 rows
+    datatable(wide_dt[1:10,]) 
   })
   
   #topic Revenue bullet graph 
@@ -528,8 +502,8 @@ server <- function(input, output) {
     
     
     # Create bar plot
-    p <- ggplot(topNodes, aes(x = name
-                              , y = total_revenue_omu)) +
+    p <- ggplot(topNodes, aes(x = name,
+                              y = total_revenue_omu)) +
       geom_col_interactive(aes(tooltip = name)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(x = NULL, y = NULL) +
@@ -892,7 +866,7 @@ server <- function(input, output) {
       theme_minimal() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
             panel.grid.major.x = element_blank(),
-            panel.grid.minor.x = element_blank()) +
+            panel.grid.minor.x = element_blank()) + 
       scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
     
     ggplotly(p)
