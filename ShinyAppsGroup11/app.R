@@ -31,7 +31,6 @@ library(shinyWidgets)
 library(bsicons)
 #-------------------------------------------> Must have packages
 
-
 print(mem_used())
 options(scipen = 999) #disables scientific notation
 
@@ -147,26 +146,20 @@ cards1 <- list(
   card(
     full_screen = TRUE,
     card_header("Counts by Country"),
-    plotOutput("company_plot")
+    plotOutput("company_plot", height = "400px", width = "auto")
   ),
   card(
     full_screen = TRUE,
     card_header("Company Data Table"),
-    DT:: dataTableOutput("company_dt", width = "100%", height = "auto")
+    DT:: dataTableOutput("company_dt", width = "auto", height = "auto")
   ),
   
   card(
     full_screen = TRUE,
-    card_header("Word Cloud and Bullet Graph of Topic Revenue"),
+    card_header("Word Cloud (set.seed 123) and Bullet Graph of Topic Revenue"),
     card_body(
       fluidRow(
-        column(width = 12, layout_sidebar(
-                   fillable = TRUE,
-                   sidebar = sidebar(
-                     width = 100,
-                     numericInput('size', 'Size of wordcloud', value = 1, min = 1, max = 10, step = 1),
-                     actionButton("run_button1", "Go"),
-                   ), wordcloud2Output("wordcloud2", height = "auto"))),
+        column(width = 12, wordcloud2Output("wordcloud2", height = "200px", width = "auto")),
         column(width = 12, gt_output("bullet_topics"))
      )
     )
@@ -279,7 +272,7 @@ cards3 <- list(
        width = 215,
        fillable = TRUE,
        sidebar = sidebar(
-         numericInput("topic_group", "Number of Topic Group", value = 6, min = 2, max = 20, step = 1),
+         numericInput("topic_group", "Number of Topic Group", value = 7, min = 2, max = 20, step = 1),
          actionButton("run_button", "Generate")
        ), card_body(plotlyOutput("myplot"))
      )
@@ -287,8 +280,10 @@ cards3 <- list(
   card(
     full_screen = TRUE,
     card_header("ANOVA Test"),
-    plotOutput("statplot1")
-  ),
+    card_body(
+      plotOutput("statplot1"),
+      markdown("Since p < 0.05, reject the null that revenue across Topic Groups are similar"
+    ))),
   card(
     full_screen = TRUE,
     card_header("Confidence Interval"),
@@ -349,7 +344,8 @@ value_box_4_4 <-  value_box(
 ui <- navbarPage(
   title = "Group 11 VAA Project",
   theme = bs_theme(version = 5, bootswatch = "minty"),
-  
+  tags$head(tags$style(".shiny-notification {position: fixed; top: 24% ;left: 20%}")),
+
   #UI First Panel #1 begin --------------------------------------------->
   
   # First panel tab
@@ -443,11 +439,11 @@ ui <- navbarPage(
       ),
       sliderInput("degree", "Nth Degree of relationship:", min = 1, max = 10, value = 2),
       tags$hr(),  # Add a horizontal line as a divider
-      p(style = "font-family: Arial; font-style: italic; font-size: 16px;", "Graph Filters"),
+      p(style = "font-family: Arial; font-style: italic; font-size: 12px;", "Graph Filters"),
       radioButtons("colorOption2", "Visualise nodes by:",
                    choices = c("View by Community", "View by Type", "View by Degree"),
                    selected = "View by Community"),
-      p(style = "font-family: Arial; font-size: 16px;", "Layout:"),
+      p(style = "font-family: Arial; font-size: 12px;", "Layout:"),
       checkboxInput("layoutToggle", "Hierarchical Layout", value = FALSE),
       checkboxInput("physicsToggle", "Enable Physics", value = FALSE)
     ),
@@ -469,19 +465,36 @@ ui <- navbarPage(
 server <- function(input, output) {
   set.seed(1234)  # Set the seed to 1234
   
-  wordcloudinput <- eventReactive(input$run_button1, {
-    print("Run button 1 is working!")
-    input$size
-  })
   
   output$wordcloud2 <- renderWordcloud2({
     set.seed(1234)  # Set the seed to 1234
-    wordcloud2(data=stopwords_removed_freq, wordcloudinput())
+    wordcloud2(data=stopwords_removed_freq, 1)
   })
   
 
   # Company plot
   output$company_plot <- renderPlot({
+    
+    
+    dat <- data.frame(x = numeric(0), y = numeric(0))
+    
+    withProgress(message = 'Making plot', value = 0, {
+      # Number of times we'll go through the loop
+      n <- 10
+      
+      for (i in 1:n) {
+        # Each time through the loop, add another row of data. This is
+        # a stand-in for a long-running computation.
+        dat <- rbind(dat, data.frame(x = rnorm(1), y = rnorm(1)))
+        
+        # Increment the progress bar, and update the detail text.
+        incProgress(1/n, detail = paste("Doing part", i))
+        
+        # Pause for 0.1 seconds to simulate a long computation.
+        Sys.sleep(0.1)
+      }
+    })
+    
     ggplot(mc3_nodes1_Other, aes(x = reorder(country, -counts), y = counts)) +
       geom_bar(stat = "identity", fill = '#3498db') +
       geom_text(aes(label = format(counts, big.mark = ",")), vjust = -0.5) +
@@ -539,6 +552,28 @@ server <- function(input, output) {
   })
   
   output$networkPlot_owner <- renderVisNetwork({
+    
+    
+    dat <- data.frame(x = numeric(0), y = numeric(0))
+    
+    withProgress(message = 'Making plot', value = 0, {
+      # Number of times we'll go through the loop
+      n <- 10
+      
+      for (i in 1:n) {
+        # Each time through the loop, add another row of data. This is
+        # a stand-in for a long-running computation.
+        dat <- rbind(dat, data.frame(x = rnorm(1), y = rnorm(1)))
+        
+        # Increment the progress bar, and update the detail text.
+        incProgress(1/n, detail = paste("Doing part", i))
+        
+        # Pause for 0.1 seconds to simulate a long computation.
+        Sys.sleep(0.6)
+      }
+    })
+    
+    
     filteredNodes <- nodes_df2[!is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -654,7 +689,11 @@ server <- function(input, output) {
       theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
             panel.grid.major.x = element_blank(),
             panel.grid.minor.x = element_blank()) +
-      scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
+      scale_y_continuous(
+        labels = function(x) paste0(x / 1000000, "M"),
+        limits = c(0, max(topNodes$total_revenue_omu) / 1000000, by = 0.5),
+        breaks = seq(0, max(topNodes$total_revenue_omu), by = 0.5)
+      ) # Add numerical scaling for y-axis
     
     ggplotly(p)
   })
@@ -805,6 +844,7 @@ server <- function(input, output) {
   
   
   output$networkPlot_company <- renderVisNetwork({
+    
     filteredNodes <- nodes_df2[is.na(nodes_df2$new_type), ]
     centralityMeasure <- input$centrality
     topN <- input$topN
@@ -1022,9 +1062,31 @@ server <- function(input, output) {
       top_n(15, beta) %>%
       ungroup() %>%
       mutate(term2 = fct_reorder(term, beta))
-  })
+  }
+  , ignoreNULL = FALSE
+  )
   
   output$myplot <- renderPlotly({
+    
+    dat <- data.frame(x = numeric(0), y = numeric(0))
+    
+    withProgress(message = 'Making plot', value = 0, {
+      # Number of times we'll go through the loop
+      n <- 10
+      
+      for (i in 1:n) {
+        # Each time through the loop, add another row of data. This is
+        # a stand-in for a long-running computation.
+        dat <- rbind(dat, data.frame(x = rnorm(1), y = rnorm(1)))
+        
+        # Increment the progress bar, and update the detail text.
+        incProgress(1/n, detail = paste("Doing part", i))
+        
+        # Pause for 0.1 seconds to simulate a long computation.
+        Sys.sleep(0.7)
+      }
+    })
+    
     ggplot(word_probs(), aes(term2, beta, fill = as.factor(topic))) +
       geom_col(show.legend = FALSE) +
       facet_wrap(~ topic, scales = "free") +
@@ -1037,7 +1099,7 @@ server <- function(input, output) {
                   na.omit(),
                    x= topic, y= revenue_omu, type ="np",
                    xlab= "Topic Group", ylab = "Revenue($)",
-                   title = "Comparison of Revenue across Topic Group. Since p < 0.05, reject the null hypothesis that revenue across Topic Groups are similar",
+                   title = "Comparison of Revenue across Topic Group",
                    pairwise.comparisons = TRUE, pairwise.display ="ns", conf.level = 0.95
     ) +
       scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
@@ -1045,7 +1107,8 @@ server <- function(input, output) {
   
   
   output$statplot2 <- renderPlot({
-      ggplot(data = stopwords_removed %>%
+    
+    ggplot(data = stopwords_removed %>%
                left_join(word_probs(), by = c("word" = "term2"), unmatched= "drop") %>%
                na.omit(), 
            aes(x = topic, y = revenue_omu)) +
@@ -1059,10 +1122,10 @@ server <- function(input, output) {
       #add colors to graph 
       scale_color_manual(values = c("#446455","#D3DDDC"), 
                          aesthetics = "interval_color") +
-      theme(axis.text.x = element_text(vjust = 1, hjust=1)) +
+      theme(axis.text.x = element_text(vjust = 1, hjust = 1, size = 8)) +
+      scale_x_continuous(breaks=seq(1,10,1))+
       scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
-  })
-  
+})
   
   #-----------------------------------------Dashboard 4 outputs-->
   
