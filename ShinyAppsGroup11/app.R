@@ -554,7 +554,7 @@ server <- function(input, output) {
   output$networkPlot_owner <- renderVisNetwork({
     
     
-    dat <- data.frame(x = numeric(0), y = numeric(0))
+    dat2 <- data.frame(x = numeric(0), y = numeric(0))
     
     withProgress(message = 'Making plot', value = 0, {
       # Number of times we'll go through the loop
@@ -563,7 +563,7 @@ server <- function(input, output) {
       for (i in 1:n) {
         # Each time through the loop, add another row of data. This is
         # a stand-in for a long-running computation.
-        dat <- rbind(dat, data.frame(x = rnorm(1), y = rnorm(1)))
+        dat2 <- rbind(dat2, data.frame(x = rnorm(1), y = rnorm(1)))
         
         # Increment the progress bar, and update the detail text.
         incProgress(1/n, detail = paste("Doing part", i))
@@ -689,11 +689,7 @@ server <- function(input, output) {
       theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
             panel.grid.major.x = element_blank(),
             panel.grid.minor.x = element_blank()) +
-      scale_y_continuous(
-        labels = function(x) paste0(x / 1000000, "M"),
-        limits = c(0, max(topNodes$total_revenue_omu) / 1000000, by = 0.5),
-        breaks = seq(0, max(topNodes$total_revenue_omu), by = 0.5)
-      ) # Add numerical scaling for y-axis
+      scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis 
     
     ggplotly(p)
   })
@@ -1068,7 +1064,7 @@ server <- function(input, output) {
   
   output$myplot <- renderPlotly({
     
-    dat <- data.frame(x = numeric(0), y = numeric(0))
+    dat3 <- data.frame(x = numeric(0), y = numeric(0))
     
     withProgress(message = 'Making plot', value = 0, {
       # Number of times we'll go through the loop
@@ -1077,7 +1073,7 @@ server <- function(input, output) {
       for (i in 1:n) {
         # Each time through the loop, add another row of data. This is
         # a stand-in for a long-running computation.
-        dat <- rbind(dat, data.frame(x = rnorm(1), y = rnorm(1)))
+        dat3 <- rbind(dat3, data.frame(x = rnorm(1), y = rnorm(1)))
         
         # Increment the progress bar, and update the detail text.
         incProgress(1/n, detail = paste("Doing part", i))
@@ -1123,7 +1119,7 @@ server <- function(input, output) {
       scale_color_manual(values = c("#446455","#D3DDDC"), 
                          aesthetics = "interval_color") +
       theme(axis.text.x = element_text(vjust = 1, hjust = 1, size = 8)) +
-      scale_x_continuous(breaks=seq(1,10,1))+
+      scale_x_continuous(breaks=seq(1,20,1))+
       scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M"))
 })
   
