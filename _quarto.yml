@@ -3,13 +3,13 @@ project:
 
 website:
   title: "ISSS608-VAA Project Website"
-  image: images/fisheye_rev.png
+  image: images/revised_logo2.png
   open-graph: true
   site-url: "http:isss608-vast-2023-grp11.netlify.app"
   repo-url: "https://github.com/yawwwn/VAST-challenge-2023"
   navbar:
     background: "#f0eeeb"
-    logo: image/fisheye_rev.png
+    logo: image/revised_logo2.png
     logo-alt: "ISSS608 VAA Group 11"
     title: false
     collapse-below: lg
