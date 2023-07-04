@@ -338,8 +338,6 @@ value_box_4_4 <-  value_box(
     theme_color = "success"
   )
 
-
-
 # Define the UI ===================================================>
 ui <- navbarPage(
   title = "Group 11 VAA Project",
