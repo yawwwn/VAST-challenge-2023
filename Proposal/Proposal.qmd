@@ -42,7 +42,7 @@ The following are the approaches by our team to address the different questions.
 
 ![](/image/Screenshot%202023-07-04%20at%206.44.57%20PM.png){fig-align="center"}
 
-![](/image/Screenshot%202023-07-04%20at%206.45.17%20PM.png){fig-align="center"}
+![](/image/treemap.png){fig-align="center"}
 
 In this section, we'll explore some exploratory analysis to draw some broad insights on the company data, including but not excluding, median revenue of companies, number of companies per country, wordcloud of words identified in products/services, etc.
 
