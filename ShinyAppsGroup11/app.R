@@ -338,6 +338,11 @@ value_box_4_4 <-  value_box(
     theme_color = "success"
   )
 
+nodeTypeChoices <- list(
+  "Owners & Contacts" = c("All","Beneficial Owner + Company Contact", "Beneficial Owner", "Company Contact"),
+  "Companies" = c("All","Beneficial Owner", "Company Contact", "Company")
+)
+
 # Define the UI ===================================================>
 ui <- navbarPage(
   title = "Group 11 VAA Project",
@@ -370,7 +375,7 @@ ui <- navbarPage(
        tags$hr(),  # Add a horizontal line as a divider
        p(style = "font-family: Arial; font-style: italic; font-size: 18px;", "Additional Filters"),
        selectInput("nodeType", "Filter by Type:",
-                  choices = c("All", "Beneficial Owner + Company Contact", "Beneficial Owner", "Company Contact", "Company"),
+                  choices = c("All", "Beneficial Owner + Company Contact", "Beneficial Owner", "Company Contact"),
                   selected = "All"),
         radioButtons("colorOption", "Visualise nodes by:",
                    choices = c("View by Community", "View by Type"),
@@ -460,7 +465,7 @@ ui <- navbarPage(
   
 
 # Define the server code =======================================>
-server <- function(input, output) {
+server <- function(input, output, session) {
   set.seed(1234)  # Set the seed to 1234
   
   
@@ -1060,6 +1065,16 @@ server <- function(input, output) {
     
     ggplotly(p)
   })
+  
+  
+  observe({
+    # Get the currently selected tab
+    selectedTab <- input$myNavset
+    
+    # Update the choices of nodeType based on the selected tab
+    updateSelectInput(session, "nodeType", choices = nodeTypeChoices[[selectedTab]])
+  })
+  
   
   #-------------------------------------------Topic modeling Section--->
   
