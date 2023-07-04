@@ -66,8 +66,10 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="rwds.css">
 <meta property="og:title" content="ISSS608-VAA Project Website - Visual Analytics Project Proposal">
 <meta property="og:description" content="VAST Challenge 2023">
-<meta property="og:image" content="http:isss608-vast-2023-grp11.netlify.app/image/treemap.png">
+<meta property="og:image" content="http:isss608-vast-2023-grp11.netlify.app/image/Picture 1.png">
 <meta property="og:site-name" content="ISSS608-VAA Project Website">
+<meta property="og:image:height" content="2227">
+<meta property="og:image:width" content="4184">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -96,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../userguide.html" rel="" target="">
+    <a class="nav-link" href="../image/ISSS608_G1_GRP11_USERGUIDE.pdf" rel="" target="">
  <span class="menu-text">User Guide</span></a>
   </li>  
   <li class="nav-item">
@@ -206,29 +208,63 @@ ul.task-list li input[type="checkbox"] {
 <section id="approach" class="level1">
 <h1>4. Approach</h1>
 <p>The following are the approaches by our team to address the different questions.</p>
-<section id="evaluating-link-inference-bundled-data-sets" class="level2">
-<h2 class="anchored" data-anchor-id="evaluating-link-inference-bundled-data-sets">4.1 Evaluating link inference bundled data sets</h2>
-<p>Our approach is identifying which bundle is reliable is as follows:</p>
-<ul>
-<li><p>Plot a heatmap of the number of transactions over the years to observe the temporal trend and anomalies. The resulting year would be used as the timeframe in the subsequent network graph.</p>
-<p><img src="../image/treemap.png" class="img-fluid"></p></li>
-<li><p>Next, plot a treemap based on attributes of the edges, specifically the HSCodes and the Year of the individual trade records. The resulting top HSCode and as well as the anomaly (in this case, the spike in the median weight) will be identified and similarly used for the network graph</p>
-<p><img src="../image/heatmap.png" class="img-fluid"></p></li>
-<li><p>Another treemap is plotted using the Bundled data based on HSCode Chapter30.</p></li>
-</ul>
-<p><img src="../image/Chap30treemap.png" class="img-fluid"></p>
-<ul>
-<li>Subsequently, a stacked bar chart is plotted to observe which HSCodes are completed to identify which bundles are reliable.</li>
-</ul>
-<p><img src="../image/Q1Q2.png" class="img-fluid"></p>
-<p>The plotted graphs will then be used to identify new patterns or anomalies that are present when new links are added.</p>
+<section id="overview-summary-of-company-data" class="level2">
+<h2 class="anchored" data-anchor-id="overview-summary-of-company-data">4.1 Overview Summary of Company Data</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Picture 1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Screenshot 2023-07-04 at 6.44.57 PM.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Screenshot 2023-07-04 at 6.45.17 PM.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>In this section, we’ll explore some exploratory analysis to draw some broad insights on the company data, including but not excluding, median revenue of companies, number of companies per country, wordcloud of words identified in products/services, etc.</p>
+<p>These should provide us with a preliminary understanding of the dataset, in order to explore further with graph analysis.</p>
 </section>
-<section id="identifying-which-companies-are-likely-to-involve-in-iuu" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-which-companies-are-likely-to-involve-in-iuu">4.2 Identifying which companies are likely to involve in IUU</h2>
-<p><img src="../image/Q3Q4.png" class="img-fluid"></p>
+<section id="network-graph-to-explore-relationships-and-identify-anomalies-between-owners-contacts-and-companies" class="level2">
+<h2 class="anchored" data-anchor-id="network-graph-to-explore-relationships-and-identify-anomalies-between-owners-contacts-and-companies">4.2 Network Graph to explore relationships and identify anomalies between owners, contacts and companies</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Picture 2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Screenshot 2023-07-04 at 6.50.00 PM.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>In this section, we’ll divide the it into 2 panels: 1 exploring Owners &amp; Contacts; 1 exploring Companies.</p>
+<p>For both, we’ll do a network graph of the owners (including their relationships with the companies). Considering the dataset is huge, we’ll do a filter by centrality measures (i.e.&nbsp;betweenness centrality and degree centrality) so users can further filter the dataset to see top N owners &amp; contacts.</p>
+<p>In addition, considering community detection would be valuable in this analysis, we’ll color the network by the community after running the community detection algorithm.</p>
+<p>Next, for the filtered top N owners, we’ll do additional barplots and boxplots to highlight their revenue, companies involved in and etc.</p>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
+<section id="topic-modelling-to-identify-topics-based-on-companies-products-services" class="level2">
+<h2 class="anchored" data-anchor-id="topic-modelling-to-identify-topics-based-on-companies-products-services">4.3 Topic Modelling to identify topics based on companies’ products &amp; services</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Picture 3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Below is an illustration of our approach for topic modelling:<br>
+<img src="../image/Picture 4.png" class="img-fluid"></p>
+</section>
+<section id="nth-degree-of-relationship" class="level2">
+<h2 class="anchored" data-anchor-id="nth-degree-of-relationship">4.4 Nth Degree of relationship</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../image/Picture 6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Lastly, in order to facilitate investigation particular owner or particular company that might be suspicious, we will add a section that allows users to search an individual owner or company. By doing so, there would be a network graph that shows the edges and relationships that are related to the node selected.</p>
+<p>In addition, user can also specify the Nth degree of relationships. That is, by selection N=2, the network graph will expand to include edges and other nodes related to those are connected to the chosen node.</p>
+<p>On top of it, we’ll add some value boxes at the top to highlight key insights of the network, such as topics involved, total revenue associated with, etc.</p>
 
 
 </section>

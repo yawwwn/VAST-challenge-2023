@@ -36,30 +36,45 @@ The motivation of our group on the mini-case challenge 3 is as such:
 
 The following are the approaches by our team to address the different questions.
 
-## 4.1 Evaluating link inference bundled data sets
+## 4.1 Overview Summary of Company Data
 
-Our approach is identifying which bundle is reliable is as follows:
+![](/image/Picture%201.png){fig-align="center"}
 
--   Plot a heatmap of the number of transactions over the years to observe the temporal trend and anomalies. The resulting year would be used as the timeframe in the subsequent network graph.
+![](/image/Screenshot%202023-07-04%20at%206.44.57%20PM.png){fig-align="center"}
 
-    ![](/image/treemap.png)
+![](/image/Screenshot%202023-07-04%20at%206.45.17%20PM.png){fig-align="center"}
 
--   Next, plot a treemap based on attributes of the edges, specifically the HSCodes and the Year of the individual trade records. The resulting top HSCode and as well as the anomaly (in this case, the spike in the median weight) will be identified and similarly used for the network graph
+In this section, we'll explore some exploratory analysis to draw some broad insights on the company data, including but not excluding, median revenue of companies, number of companies per country, wordcloud of words identified in products/services, etc.
 
-    ![](/image/heatmap.png)
+These should provide us with a preliminary understanding of the dataset, in order to explore further with graph analysis.
 
--   Another treemap is plotted using the Bundled data based on HSCode Chapter30.
+## 4.2 Network Graph to explore relationships and identify anomalies between owners, contacts and companies
 
-![](/image/Chap30treemap.png)
+![](/image/Picture%202.png){fig-align="center"}
 
--   Subsequently, a stacked bar chart is plotted to observe which HSCodes are completed to identify which bundles are reliable.
+![](/image/Screenshot%202023-07-04%20at%206.50.00%20PM.png){fig-align="center"}
 
-![](/image/Q1Q2.png)
+In this section, we'll divide the it into 2 panels: 1 exploring Owners & Contacts; 1 exploring Companies.
 
-The plotted graphs will then be used to identify new patterns or anomalies that are present when new links are added.
+For both, we'll do a network graph of the owners (including their relationships with the companies). Considering the dataset is huge, we'll do a filter by centrality measures (i.e. betweenness centrality and degree centrality) so users can further filter the dataset to see top N owners & contacts.
 
-## 4.2 Identifying which companies are likely to involve in IUU
+In addition, considering community detection would be valuable in this analysis, we'll color the network by the community after running the community detection algorithm.
 
-![](/image/Q3Q4.png)
+Next, for the filtered top N owners, we'll do additional barplots and boxplots to highlight their revenue, companies involved in and etc.
 
-## 
+## 4.3 Topic Modelling to identify topics based on companies' products & services
+
+![](/image/Picture%203.png){fig-align="center"}
+
+Below is an illustration of our approach for topic modelling:\
+![](/image/Picture%204.png)
+
+## 4.4 Nth Degree of relationship
+
+![](/image/Picture%206.png){fig-align="center"}
+
+Lastly, in order to facilitate investigation particular owner or particular company that might be suspicious, we will add a section that allows users to search an individual owner or company. By doing so, there would be a network graph that shows the edges and relationships that are related to the node selected.
+
+In addition, user can also specify the Nth degree of relationships. That is, by selection N=2, the network graph will expand to include edges and other nodes related to those are connected to the chosen node.
+
+On top of it, we'll add some value boxes at the top to highlight key insights of the network, such as topics involved, total revenue associated with, etc.

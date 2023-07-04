@@ -19,7 +19,7 @@ website:
       - text: "Proposal"
         href: "Proposal/Proposal.html"
       - text: "User Guide"
-        href: "userguide.html"
+        href: "/image/ISSS608_G1_GRP11_USERGUIDE.pdf"
       - text: "Shiny App"
         href: "https://junsok21.shinyapps.io/ShinyAppsGroup11/"
       - text: "Poster"

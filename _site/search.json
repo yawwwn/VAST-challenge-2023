@@ -131,5 +131,33 @@
     "title": "test",
     "section": "Running Code",
     "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "Proposal/Proposal.html#overview-summary-of-company-data",
+    "href": "Proposal/Proposal.html#overview-summary-of-company-data",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.1 Overview Summary of Company Data",
+    "text": "4.1 Overview Summary of Company Data\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nIn this section, we’ll explore some exploratory analysis to draw some broad insights on the company data, including but not excluding, median revenue of companies, number of companies per country, wordcloud of words identified in products/services, etc.\nThese should provide us with a preliminary understanding of the dataset, in order to explore further with graph analysis."
+  },
+  {
+    "objectID": "Proposal/Proposal.html#network-graph-to-explore-relationships-and-identify-anomalies-between-owners-contacts-and-companies",
+    "href": "Proposal/Proposal.html#network-graph-to-explore-relationships-and-identify-anomalies-between-owners-contacts-and-companies",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.2 Network Graph to explore relationships and identify anomalies between owners, contacts and companies",
+    "text": "4.2 Network Graph to explore relationships and identify anomalies between owners, contacts and companies\n\n\n\n\n\n\n\n\n\n\nIn this section, we’ll divide the it into 2 panels: 1 exploring Owners & Contacts; 1 exploring Companies.\nFor both, we’ll do a network graph of the owners (including their relationships with the companies). Considering the dataset is huge, we’ll do a filter by centrality measures (i.e. betweenness centrality and degree centrality) so users can further filter the dataset to see top N owners & contacts.\nIn addition, considering community detection would be valuable in this analysis, we’ll color the network by the community after running the community detection algorithm.\nNext, for the filtered top N owners, we’ll do additional barplots and boxplots to highlight their revenue, companies involved in and etc."
+  },
+  {
+    "objectID": "Proposal/Proposal.html#topic-modelling-to-identify-topics-based-on-companies-products-services",
+    "href": "Proposal/Proposal.html#topic-modelling-to-identify-topics-based-on-companies-products-services",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.3 Topic Modelling to identify topics based on companies’ products & services",
+    "text": "4.3 Topic Modelling to identify topics based on companies’ products & services\n\n\n\n\n\nBelow is an illustration of our approach for topic modelling:"
+  },
+  {
+    "objectID": "Proposal/Proposal.html#nth-degree-of-relationship",
+    "href": "Proposal/Proposal.html#nth-degree-of-relationship",
+    "title": "Visual Analytics Project Proposal",
+    "section": "4.4 Nth Degree of relationship",
+    "text": "4.4 Nth Degree of relationship\n\n\n\n\n\nLastly, in order to facilitate investigation particular owner or particular company that might be suspicious, we will add a section that allows users to search an individual owner or company. By doing so, there would be a network graph that shows the edges and relationships that are related to the node selected.\nIn addition, user can also specify the Nth degree of relationships. That is, by selection N=2, the network graph will expand to include edges and other nodes related to those are connected to the chosen node.\nOn top of it, we’ll add some value boxes at the top to highlight key insights of the network, such as topics involved, total revenue associated with, etc."
   }
 ]
