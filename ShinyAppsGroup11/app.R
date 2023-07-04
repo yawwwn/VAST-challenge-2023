@@ -156,7 +156,7 @@ cards1 <- list(
   
   card(
     full_screen = TRUE,
-    card_header("Word Cloud (set.seed 123) and Bullet Graph of Topic Revenue"),
+    card_header("Word Cloud and Bullet Graph of Topic Revenue"),
     card_body(
       fluidRow(
         column(width = 12, wordcloud2Output("wordcloud2", height = "200px", width = "auto")),
@@ -677,21 +677,28 @@ server <- function(input, output) {
     
     
     # Create bar plot
-    p <- ggplot(topNodes, aes(x = name,
-                              y = total_revenue_omu)) +
-      geom_col_interactive(aes(tooltip = name)) +
-      geom_bar(stat = "identity", fill = "steelblue") +
-      labs(x = NULL, y = NULL) +
-      theme_minimal() +
-      xlab("Owners & Contacts") +  # Add x-axis title
-      ylab("Total Revenue (OMU)") +  # Add y-axis title
-      theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
-            panel.grid.major.x = element_blank(),
-            panel.grid.minor.x = element_blank()) +
-      scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis 
+    plot_ly(topNodes, x = topNodes$name, y = topNodes$total_revenue_omu, type = "bar") %>%
+      layout(xaxis = list(title = "Owners & Contacts",
+                          tickangle = -45),
+             yaxis = list(title = "Total Revenue (OMU)"),
+             hoverlabel = list(namelength = -1),
+             showlegend = FALSE)
     
-    ggplotly(p)
+#    p <- ggplot(topNodes, aes(x = name,
+#                              y = total_revenue_omu)) +
+#      geom_col_interactive(aes(tooltip = name)) +
+#      geom_bar(stat = "identity", fill = "steelblue") +
+#      labs(x = NULL, y = NULL) +
+#      theme_minimal() +
+#      xlab("Owners & Contacts") +  # Add x-axis title
+#      ylab("Total Revenue (OMU)") +  # Add y-axis title
+#      theme_minimal() +
+#      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+#            panel.grid.major.x = element_blank(),
+#            panel.grid.minor.x = element_blank()) +
+ #     scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis 
+#    
+#    ggplotly(p)
   })
   
   #heatmap
@@ -939,19 +946,27 @@ server <- function(input, output) {
     
     
     # Create bar plot
-    p <- ggplot(topNodes, aes(x = Name
-                              , y = revenue_omu)) +
-      geom_col_interactive(aes(tooltip = name)) +
-      geom_bar(stat = "identity", fill = "steelblue") +
-      xlab("Companies") +  # Add x-axis title
-      ylab("Total Revenue (OMU)") +  # Add y-axis title
-      theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
-            panel.grid.major.x = element_blank(),
-            panel.grid.minor.x = element_blank()) +
-      scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
+    plot_ly(topNodes, x = topNodes$name, y = topNodes$revenue_omu, type = "bar") %>%
+      layout(xaxis = list(title = "Owners & Contacts",
+                          tickangle = -45),
+             yaxis = list(title = "Total Revenue (OMU)"),
+             hoverlabel = list(namelength = -1),
+             showlegend = FALSE)
     
-    ggplotly(p)
+    # Create bar plot
+   # p <- ggplot(topNodes, aes(x = Name
+  #                            , y = revenue_omu)) +
+  #    geom_col_interactive(aes(tooltip = name)) +
+  #    geom_bar(stat = "identity", fill = "steelblue") +
+  #    xlab("Companies") +  # Add x-axis title
+  #    ylab("Total Revenue (OMU)") +  # Add y-axis title
+  #    theme_minimal() +
+  #    theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 0.5, size = 8),
+  #          panel.grid.major.x = element_blank(),
+  #          panel.grid.minor.x = element_blank()) +
+  #    scale_y_continuous(labels = comma)  # Add numerical scaling for y-axis
+    
+  #  ggplotly(p)
   })
   
   output$boxPlot_top_co <- renderPlotly({
