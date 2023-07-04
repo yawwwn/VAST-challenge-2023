@@ -98,41 +98,6 @@
     "text": "In this project, our team will attempt the VAST Challenge 2023 and build a web-enabled visual analytics application by using R Shiny. The challenge focuses on illegal, unreported and unregulated (IUU) fishing, which is said to be a major contributor to overfishing globally. The illegal fishing trade has been linked to organized crime, and human rights violations are common when fishing operations are conducted without regulatory oversight. FishEye International is a nonpartisan organization whom spent the past years collecting data and have gain access to an international finance corporation’s database on fishing related companies. FishEye is enlisting the help of the Visual Analytics community to assist in analysing the data and making recommendations."
   },
   {
-    "objectID": "Proposal/Proposal.html#evaluating-link-inference-bundled-data-sets",
-    "href": "Proposal/Proposal.html#evaluating-link-inference-bundled-data-sets",
-    "title": "Visual Analytics Project Proposal",
-    "section": "4.1 Evaluating link inference bundled data sets",
-    "text": "4.1 Evaluating link inference bundled data sets\nOur approach is identifying which bundle is reliable is as follows:\n\nPlot a heatmap of the number of transactions over the years to observe the temporal trend and anomalies. The resulting year would be used as the timeframe in the subsequent network graph.\n\nNext, plot a treemap based on attributes of the edges, specifically the HSCodes and the Year of the individual trade records. The resulting top HSCode and as well as the anomaly (in this case, the spike in the median weight) will be identified and similarly used for the network graph\n\nAnother treemap is plotted using the Bundled data based on HSCode Chapter30.\n\n\n\nSubsequently, a stacked bar chart is plotted to observe which HSCodes are completed to identify which bundles are reliable.\n\n\nThe plotted graphs will then be used to identify new patterns or anomalies that are present when new links are added."
-  },
-  {
-    "objectID": "Proposal/Proposal.html#identifying-which-companies-are-likely-to-involve-in-iuu",
-    "href": "Proposal/Proposal.html#identifying-which-companies-are-likely-to-involve-in-iuu",
-    "title": "Visual Analytics Project Proposal",
-    "section": "4.2 Identifying which companies are likely to involve in IUU",
-    "text": "4.2 Identifying which companies are likely to involve in IUU"
-  },
-  {
-    "objectID": "Untitled.html",
-    "href": "Untitled.html",
-    "title": "test",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "Untitled.html#quarto",
-    "href": "Untitled.html#quarto",
-    "title": "test",
-    "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
-  },
-  {
-    "objectID": "Untitled.html#running-code",
-    "href": "Untitled.html#running-code",
-    "title": "test",
-    "section": "Running Code",
-    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
-  },
-  {
     "objectID": "Proposal/Proposal.html#overview-summary-of-company-data",
     "href": "Proposal/Proposal.html#overview-summary-of-company-data",
     "title": "Visual Analytics Project Proposal",
@@ -159,5 +124,26 @@
     "title": "Visual Analytics Project Proposal",
     "section": "4.4 Nth Degree of relationship",
     "text": "4.4 Nth Degree of relationship\n\n\n\n\n\nLastly, in order to facilitate investigation particular owner or particular company that might be suspicious, we will add a section that allows users to search an individual owner or company. By doing so, there would be a network graph that shows the edges and relationships that are related to the node selected.\nIn addition, user can also specify the Nth degree of relationships. That is, by selection N=2, the network graph will expand to include edges and other nodes related to those are connected to the chosen node.\nOn top of it, we’ll add some value boxes at the top to highlight key insights of the network, such as topics involved, total revenue associated with, etc."
+  },
+  {
+    "objectID": "Untitled.html",
+    "href": "Untitled.html",
+    "title": "test",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Untitled.html#quarto",
+    "href": "Untitled.html#quarto",
+    "title": "test",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "Untitled.html#running-code",
+    "href": "Untitled.html#running-code",
+    "title": "test",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
   }
 ]
