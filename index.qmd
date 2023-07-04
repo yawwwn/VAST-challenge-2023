@@ -268,7 +268,7 @@ search: false
                         display: flex;">
                         <h3 class="team-member-name-two" style="margin-top:10px;margin-bottom:12px;font-size:30px;font-weight:600;line-height:46px;color:#5a96e3;">User Guide</h3>
                         <p class="team-member-text" style="margin-bottom:20px;text-align:left">Step-by-step guide on how to use the data visualisation functions designed within our Shiny application</p>
-                        <a href="https://isss608-vast-2023-grp11.netlify.app/userguide" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
+                        <a href="/image/ISSS608_G1_GRP11_USERGUIDE.pdf" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
                            <div>Learn how to use</div>
                            <div class="arrow-embed w-embed" style="margin-left: 2px;
                               display: flex;">
@@ -290,7 +290,7 @@ search: false
                         display: flex;">
                         <h3 class="team-member-name-two" style="margin-top:10px;margin-bottom:12px;font-size:30px;font-weight:600;line-height:46px;color:#5a96e3;">Poster</h3>
                         <p class="team-member-text" style="margin-bottom:20px;text-align:left">One pager on: Issues and problems, Motivation, Approach, Results and Future Work </p>
-                        <a href="https://isss608-vast-2023-grp11.netlify.app/poster" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
+                        <a href="/image/ISSS608_G1_GRP11_POSTER.pdf" class="text-link-arrow w-inline-block" style="color:#1a1b1f;text-decoration:none;transition:opacity .2s;display:flex;justify-content:flex-start;align-items:center;font-size:14px;line-height:20px;">
                            <div>See our one-pager</div>
                            <div class="arrow-embed w-embed" style="margin-left: 2px;
                               display: flex;">
@@ -358,7 +358,7 @@ search: false
                   font-size: 20px;
                   font-weight: 500;
                   line-height: 32px;"><a href="https://www.linkedin.com/in/yao-wen-thng"><strong>THNG YAO WEN</strong></a></div>
-               <div class="team-member-position" style="margin-bottom: 24px;">SMU Master of IT in Business (Analytics)</div></div>
+               <div class="team-member-position" style="margin-bottom: 24px;">SMU Master of IT in Business (Fintech & Analytics)</div></div>
             <div id="w-node-eb8404e1-c89e-34ff-23d6-11d15e789e54-b6bcb00a" class="team-card" style="text-align:center;flex-direction:column;align-items:center;font-size:14px;line-height:22px;display:flex;grid-area:span 1 / span 1 / span 1 / span 1;">
                <img src="/image/tskam.jpeg" loading="lazy" alt class="team-member-image" style="display:block;width:190px;height:190px;object-fit:cover;border-radius:50%;margin-bottom:24px;max-height:none;">
                <div class="team-member-name-2" style="margin-bottom: 6px;
